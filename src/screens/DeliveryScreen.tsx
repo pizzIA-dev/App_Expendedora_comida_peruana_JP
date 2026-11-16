@@ -4,12 +4,14 @@ import { ActionBar } from '../components/ActionBar'
 import { Button } from '../components/Button'
 import { Sparks } from '../components/ScreenTitle'
 import { timings } from '../config/brand'
-import { findDish } from '../data/catalog'
 import { useOrder } from '../features/order/OrderContext'
+import { orderCount, orderLines, pluralPlatos } from '../features/order/orderSelectors'
 
 export function DeliveryScreen() {
   const { state, dispatch } = useOrder()
-  const dish = findDish(state.selectedDishId)
+  const lines = orderLines(state.items)
+  const count = orderCount(state.items)
+  const dish = lines[0]?.dish
   const ready = state.deliveryReady
 
   // Despacho ficticio de duración constante
@@ -42,9 +44,9 @@ export function DeliveryScreen() {
                     className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,#ffd58a_0%,#c98a2c_35%,transparent_75%)]"
                   />
                   <div className="absolute inset-x-[14%] top-[16%] bottom-[10%] animate-pop overflow-hidden rounded-[1.2rem] border-4 border-white/85 shadow-2xl">
-                    <img src={dish.image} alt={`${dish.name} en el compartimento (ilustración)`} className="size-full object-cover" />
+                    <img src={dish.image} alt={`Tu pedido en el compartimento (ilustración)`} className="size-full object-cover" />
                     <p className="absolute inset-x-0 bottom-0 bg-brand/95 py-1.5 text-center font-display text-[1rem] font-bold text-white">
-                      {dish.name}
+                      {count === 1 ? dish.name : pluralPlatos(count)}
                     </p>
                   </div>
                 </>
@@ -91,6 +93,14 @@ export function DeliveryScreen() {
             Pedido <strong className="font-display text-[1.3rem] text-brand">{state.orderCode}</strong>
             <span className="text-ink-soft"> · código ficticio</span>
           </p>
+
+          <ul className="flex flex-wrap gap-2" aria-label="Platos de tu pedido">
+            {lines.map((line) => (
+              <li key={line.dish.id} className="rounded-full bg-mint px-4 py-1.5 text-[1.05rem] font-semibold text-brand">
+                {line.quantity} × {line.dish.name}
+              </li>
+            ))}
+          </ul>
 
           <div role="status" aria-live="polite" className="w-full rounded-[1.6rem] bg-mint-soft p-5">
             <p className="flex items-center gap-3 font-display text-[1.6rem] font-extrabold text-brand kiosk:text-[1.9rem]">

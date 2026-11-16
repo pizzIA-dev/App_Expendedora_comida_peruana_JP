@@ -6,7 +6,7 @@
 |---|---|---|
 | Marca | «Sazón al Paso» (provisional), en `src/config/brand.ts` | El Word pide marca provisional; no usar Vendomática/VMarket |
 | Indicador | Cuatro etapas fijas | PLANNING §7; las referencias alternan 4 y 5 |
-| Cantidad | Una unidad, sin controles +/− | Requisito del Word; las referencias los muestran |
+| Cantidad | ~~Una unidad, sin controles +/−~~ → sustituida, ver «Cambios tras la primera revisión» | Requisito del Word |
 | Precios | Los del Word (S/ 13–16) | PLANNING §9; no copiar los de las imágenes |
 | Medios de pago | Sin logos de Yape, Plin, Izipay, Visa o Mastercard | No sugerir integración ni alianza |
 | QR | Gráfico decorativo sin datos, tapado con «DEMO» | No debe contener una solicitud real de pago |
@@ -15,6 +15,18 @@
 | Etiqueta del plato destacado | «Sugerencia» en vez de «Más elegido» | No hay datos que respalden «más elegido» |
 | Fotos | Recortes de las referencias | No había fotos propias; ver `assets.md` |
 | Ramas | Solo `main` + etiquetas por entrega | Menos fricción para M0; ver abajo |
+
+## Cambios tras la primera revisión del usuario (2026-11-16)
+
+| Cambio | Antes | Ahora |
+|---|---|---|
+| Agregar desde el catálogo | Solo desde el detalle | Botón «Agregar» en cada tarjeta; «Ver detalles» queda como enlace |
+| Varios platos | Un plato, una unidad | Varios platos con cantidad (− / +), máximo 5 por plato |
+| Cancelar pedido | Volvía a la bienvenida | Vacía el pedido y vuelve al catálogo |
+
+El segundo cambio contradice el Word («una unidad por pedido», «sin carrito complejo») y
+PLANNING §15 (carrito multiproducto fuera de alcance). Lo pidió el usuario de forma explícita;
+conviene que el equipo lo sepa por si el docente evalúa contra el Word.
 
 ### Ramas
 

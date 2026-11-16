@@ -5,9 +5,9 @@ Estado al 2026-11-16.
 - [x] Siete pantallas con diseño cuidado y consistente.
 - [x] Fotos coherentes y recursos cargando correctamente (fotos provisionales).
 - [x] Recorrido completo sin botones muertos.
-- [x] Una unidad y precios correctos.
+- [x] Cantidades y precios correctos (varios platos desde la revisión del 2026-11-16).
 - [x] Agotado bloqueado.
-- [x] Volver, cambiar plato y cancelar funcionan.
+- [x] Volver, agregar más platos y cancelar funcionan (cancelar vuelve al catálogo).
 - [x] Pago exige método y evita doble toque.
 - [x] Entrega explícitamente ficticia.
 - [x] Evaluación permite enviar u omitir localmente.

@@ -4,7 +4,7 @@
 
 ## Etapa actual
 
-**M0 — maqueta navegable: implementada y verificada en local. Sin commit, sin etiqueta y sin publicar.**
+**M0 — maqueta navegable: implementada y verificada en local. Primer commit en GitHub; los cambios de la primera revisión están sin commit. Sin etiqueta y sin demo publicada.**
 
 ## Hecho
 
@@ -12,8 +12,9 @@
   (Bricolage Grotesque + DM Sans vía `@fontsource-variable`).
 - Siete pantallas: bienvenida, catálogo, detalle, resumen, pago simulado, entrega simulada, evaluación.
 - Catálogo de cinco platos en `src/data/dishes.json` con precios del Word; tallarines rojos agotado.
-- Flujo y guardas en el reducer: una unidad, agotados bloqueados, cambio de plato limpia el método
-  de pago, cancelación con confirmación, pago exige método y bloquea doble toque, reinicio limpio.
+- Pedido con varios platos y cantidades (máx. 5 por plato); se agrega desde el catálogo o desde el detalle.
+- Flujo y guardas en el reducer: agotados bloqueados, editar el pedido limpia el método de pago,
+  cancelar pide confirmación y vuelve al catálogo, pago exige método y bloquea doble toque.
 - Indicador de cuatro etapas, avisos de simulación, marca provisional «Sazón al Paso».
 - Configuración de agentes: `opencode.json`, `.mcp.json`, `.agents/mcp_config.json` y plugin
   apuntando al vault de este proyecto.
@@ -23,9 +24,9 @@
 
 - `npm run typecheck` y `npm run build` sin errores.
 - Recorrido completo en navegador a 1366×768, revisando visualmente las siete pantallas.
-- Reglas comprobadas en navegador: agotado no seleccionable, cancelar/conservar, cambiar plato,
-  volver al inicio con y sin selección, método de pago se limpia, doble toque en «Simular pago»
-  produce un solo pedido, finalizar reinicia.
+- Reglas comprobadas en navegador: agotado no se puede agregar, agregar desde catálogo y detalle,
+  sumar/restar/eliminar, tope de 5, totales correctos, cancelar vuelve al catálogo vacío, vaciar el
+  resumen vuelve al catálogo, doble toque en «Simular pago» produce un solo pedido, finalizar reinicia.
 - Sin scroll horizontal ni contenido recortado a 1920×1080, 1366×768 y 390×844.
 
 ## No verificado
@@ -37,7 +38,9 @@
 
 ## Pendiente de M0
 
-- [ ] Primer commit y etiqueta `m0-maqueta`.
+- [x] Primer commit subido a GitHub (`d4c20fa`).
+- [ ] Commit de los cambios de la primera revisión (carrito, cancelar al menú).
+- [ ] Etiqueta `m0-maqueta`.
 - [ ] Publicar demo (Vercel, plan gratuito) — requiere que el usuario inicie sesión en Vercel.
 - [ ] Guardar capturas de las pantallas en `docs/screenshots/`.
 - [ ] Fotos definitivas: las actuales son recortes de las imágenes de referencia, de baja

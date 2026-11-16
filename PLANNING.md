@@ -14,6 +14,11 @@
 
 Este documento sustituye el planning anterior.
 
+> **Cambios aprobados después de este documento (2026-11-16):** el pedido admite varios
+> platos y cantidades, se puede agregar desde el catálogo sin abrir el detalle, y cancelar
+> devuelve al catálogo. Donde este documento diga «una unidad», «cantidad fija» o «cancelar
+> vuelve a bienvenida», prevalece `docs/decisions.md`.
+
 La ejecución inicial termina al completar M0. Las secciones V1/V2/V3
 describen trabajo posterior y no deben ejecutarse automáticamente.
 

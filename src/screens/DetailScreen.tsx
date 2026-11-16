@@ -4,9 +4,10 @@ import { AvailabilityBadge } from '../components/AvailabilityBadge'
 import { Button } from '../components/Button'
 import { Notice } from '../components/Notice'
 import { Sparks } from '../components/ScreenTitle'
-import { notices } from '../config/brand'
+import { limits, notices } from '../config/brand'
 import { findDish, formatSoles } from '../data/catalog'
 import { useOrder } from '../features/order/OrderContext'
+import { quantityOf } from '../features/order/orderSelectors'
 
 export function DetailScreen() {
   const { state, dispatch } = useOrder()
@@ -20,6 +21,11 @@ export function DetailScreen() {
       </div>
     )
   }
+
+  const quantity = quantityOf(state.items, dish.id)
+  const atLimit = quantity >= limits.maxPerDish
+  const canAdd = dish.available && !atLimit
+  const dishId = dish.id
 
   const facts = [
     { icon: Soup, label: 'Porción', value: dish.portion },
@@ -112,22 +118,30 @@ export function DetailScreen() {
         }
         right={
           <>
-            {!dish.available && (
-              <p id="soldout-hint" className="text-[1rem] font-semibold text-ink-soft">
+            {!dish.available ? (
+              <p id="add-hint" className="text-[1rem] font-semibold text-ink-soft">
                 Este plato está agotado. Elige otro del menú.
               </p>
+            ) : (
+              quantity > 0 && (
+                <p id="add-hint" className="text-[1rem] font-semibold text-ink-soft">
+                  {atLimit
+                    ? `Ya tienes ${quantity} en tu pedido (máximo por plato).`
+                    : `Ya tienes ${quantity} en tu pedido.`}
+                </p>
+              )
             )}
             <Button
               variant="primary"
               size="lg"
-              disabled={!dish.available}
-              aria-describedby={dish.available ? undefined : 'soldout-hint'}
-              onClick={() => dispatch({ type: 'SELECT_DISH' })}
+              disabled={!canAdd}
+              aria-describedby={!dish.available || quantity > 0 ? 'add-hint' : undefined}
+              onClick={() => dispatch({ type: 'ADD_ITEM', dishId })}
             >
               {dish.available ? (
                 <>
                   <ShoppingBasket aria-hidden className="size-7" />
-                  Seleccionar plato
+                  {quantity > 0 ? 'Agregar otro' : 'Agregar al pedido'}
                   <ChevronRight aria-hidden className="size-7" strokeWidth={3} />
                 </>
               ) : (

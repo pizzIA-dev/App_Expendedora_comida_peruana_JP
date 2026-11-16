@@ -6,8 +6,9 @@ import { DemoQr } from '../components/DemoQr'
 import { Notice } from '../components/Notice'
 import { ScreenTitle } from '../components/ScreenTitle'
 import { brand, notices, timings } from '../config/brand'
-import { findDish, formatSoles } from '../data/catalog'
+import { formatSoles } from '../data/catalog'
 import { useOrder } from '../features/order/OrderContext'
+import { orderCount, orderTotalCents, pluralPlatos } from '../features/order/orderSelectors'
 import type { PaymentMethod } from '../types'
 
 const METHODS: {
@@ -49,7 +50,8 @@ const METHODS: {
 
 export function PaymentScreen() {
   const { state, dispatch } = useOrder()
-  const dish = findDish(state.selectedDishId)
+  const total = orderTotalCents(state.items)
+  const count = orderCount(state.items)
   const { paymentMethod, paymentStatus } = state
   const busy = paymentStatus !== 'idle'
 
@@ -68,7 +70,7 @@ export function PaymentScreen() {
     }
   }, [paymentStatus, dispatch])
 
-  if (!dish) {
+  if (count === 0) {
     return (
       <div className="grid flex-1 place-items-center">
         <Button onClick={() => dispatch({ type: 'RESET' })}>Volver al inicio</Button>
@@ -88,8 +90,8 @@ export function PaymentScreen() {
         subtitle="Pago simulado, sin dinero real."
         aside={
           <p className="flex items-center gap-3 rounded-full bg-mint py-2 pr-6 pl-5 font-display font-extrabold text-brand">
-            <span className="text-[1.05rem]">Total</span>
-            <span className="text-[1.8rem] leading-none">{formatSoles(dish.priceCents)}</span>
+            <span className="text-[1.05rem]">Total · {pluralPlatos(count)}</span>
+            <span className="text-[1.8rem] leading-none">{formatSoles(total)}</span>
           </p>
         }
       />

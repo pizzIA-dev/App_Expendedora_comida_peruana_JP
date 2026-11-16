@@ -1,12 +1,13 @@
+import { limits } from '../../config/brand'
 import { findDish } from '../../data/catalog'
-import type { PaymentMethod, PaymentStatus, Screen } from '../../types'
+import type { OrderItem, PaymentMethod, PaymentStatus, Screen } from '../../types'
 
 export interface OrderState {
   screen: Screen
   /** Plato cuyo detalle se está consultando */
   viewingDishId: string | null
-  /** Plato elegido para el pedido (siempre una unidad) */
-  selectedDishId: string | null
+  /** Platos del pedido, en el orden en que se agregaron */
+  items: OrderItem[]
   paymentMethod: PaymentMethod | null
   paymentStatus: PaymentStatus
   orderCode: string | null
@@ -16,7 +17,7 @@ export interface OrderState {
 export const initialState: OrderState = {
   screen: 'welcome',
   viewingDishId: null,
-  selectedDishId: null,
+  items: [],
   paymentMethod: null,
   paymentStatus: 'idle',
   orderCode: null,
@@ -27,8 +28,12 @@ export type OrderAction =
   | { type: 'START' }
   | { type: 'VIEW_DISH'; dishId: string }
   | { type: 'BACK_TO_CATALOG' }
-  | { type: 'SELECT_DISH' }
-  | { type: 'CHANGE_DISH' }
+  | { type: 'ADD_ITEM'; dishId: string }
+  | { type: 'DECREMENT_ITEM'; dishId: string }
+  | { type: 'REMOVE_ITEM'; dishId: string }
+  | { type: 'GO_TO_SUMMARY' }
+  | { type: 'ADD_MORE' }
+  | { type: 'CLEAR_ORDER' }
   | { type: 'GO_TO_PAYMENT' }
   | { type: 'BACK_TO_SUMMARY' }
   | { type: 'CHOOSE_METHOD'; method: PaymentMethod }
@@ -38,6 +43,15 @@ export type OrderAction =
   | { type: 'DELIVERY_READY' }
   | { type: 'OPEN_FEEDBACK' }
   | { type: 'RESET' }
+
+/** El pedido solo se edita antes de pagar */
+const EDITABLE: Screen[] = ['catalog', 'detail', 'summary']
+
+/** Tras editar el pedido: se limpia el método de pago y un resumen vacío vuelve al menú */
+function withItems(state: OrderState, items: OrderItem[]): OrderState {
+  const screen = state.screen === 'summary' && items.length === 0 ? 'catalog' : state.screen
+  return { ...state, items, screen, paymentMethod: null }
+}
 
 /**
  * Las guardas viven aquí, no solo en los botones: una acción que no
@@ -56,29 +70,53 @@ export function orderReducer(state: OrderState, action: OrderAction): OrderState
       if (state.screen !== 'detail') return state
       return { ...state, screen: 'catalog' }
 
-    case 'SELECT_DISH': {
-      if (state.screen !== 'detail') return state
-      const dish = findDish(state.viewingDishId)
+    case 'ADD_ITEM': {
+      if (!EDITABLE.includes(state.screen)) return state
+      const dish = findDish(action.dishId)
       if (!dish || !dish.available) return state
-      const changed = dish.id !== state.selectedDishId
-      return {
-        ...state,
-        screen: 'summary',
-        selectedDishId: dish.id,
-        paymentMethod: changed ? null : state.paymentMethod,
-      }
+      const current = state.items.find((i) => i.dishId === dish.id)
+      if (current && current.quantity >= limits.maxPerDish) return state
+      const items = current
+        ? state.items.map((i) => (i.dishId === dish.id ? { ...i, quantity: i.quantity + 1 } : i))
+        : [...state.items, { dishId: dish.id, quantity: 1 }]
+      const next = withItems(state, items)
+      // Desde el detalle se vuelve al menú para poder seguir eligiendo
+      return state.screen === 'detail' ? { ...next, screen: 'catalog' } : next
     }
 
-    case 'CHANGE_DISH':
-      if (state.screen !== 'summary') return state
-      return { ...state, screen: 'catalog', paymentMethod: null }
+    case 'DECREMENT_ITEM': {
+      if (!EDITABLE.includes(state.screen)) return state
+      if (!state.items.some((i) => i.dishId === action.dishId)) return state
+      const items = state.items
+        .map((i) => (i.dishId === action.dishId ? { ...i, quantity: i.quantity - 1 } : i))
+        .filter((i) => i.quantity > 0)
+      return withItems(state, items)
+    }
 
-    case 'GO_TO_PAYMENT': {
+    case 'REMOVE_ITEM':
+      if (!EDITABLE.includes(state.screen)) return state
+      if (!state.items.some((i) => i.dishId === action.dishId)) return state
+      return withItems(
+        state,
+        state.items.filter((i) => i.dishId !== action.dishId),
+      )
+
+    case 'GO_TO_SUMMARY':
+      if (state.screen !== 'catalog' || state.items.length === 0) return state
+      return { ...state, screen: 'summary' }
+
+    case 'ADD_MORE':
       if (state.screen !== 'summary') return state
-      const dish = findDish(state.selectedDishId)
-      if (!dish || !dish.available) return state
+      return { ...state, screen: 'catalog' }
+
+    // Cancelar el pedido lo vacía y deja al usuario en el menú, listo para elegir de nuevo
+    case 'CLEAR_ORDER':
+      if (state.screen !== 'summary' && state.screen !== 'catalog') return state
+      return { ...state, screen: 'catalog', items: [], paymentMethod: null }
+
+    case 'GO_TO_PAYMENT':
+      if (state.screen !== 'summary' || state.items.length === 0) return state
       return { ...state, screen: 'payment' }
-    }
 
     case 'BACK_TO_SUMMARY':
       if (state.screen !== 'payment' || state.paymentStatus !== 'idle') return state

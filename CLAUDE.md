@@ -33,7 +33,9 @@ npm run build      # typecheck + build de producción en dist/
 ## Reglas del producto que no se negocian
 
 - Indicador de **cuatro** etapas: Elegir → Confirmar → Pagar → Retirar.
-- **Una unidad** por pedido; sin controles de cantidad.
+- Pedido con **varios platos y cantidades** (máximo 5 por plato, `limits.maxPerDish`). Cambio pedido
+  por el usuario el 2026-11-16; sustituye la regla «una unidad» del Word y de PLANNING.
+- Cancelar el pedido lo vacía y vuelve al **menú**, no a la bienvenida.
 - Precios del Word (céntimos en `src/data/dishes.json`), no los de las imágenes de referencia.
 - Agotados bloqueados en la interfaz **y** en el reducer.
 - Pago y entrega ficticios; nunca pedir datos bancarios ni mostrar logos de marcas de pago.

@@ -21,6 +21,11 @@ export interface Dish {
   contentStatus: 'provisional' | 'revisado'
 }
 
+export interface OrderItem {
+  dishId: string
+  quantity: number
+}
+
 export type Screen =
   | 'welcome'
   | 'catalog'

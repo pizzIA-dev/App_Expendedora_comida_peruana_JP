@@ -34,6 +34,7 @@ Bienvenida → Catálogo → Detalle → Resumen → Pago simulado → Entrega s
 
 ## Límites de M0
 
+- El pedido admite varios platos, con un máximo de 5 unidades por plato.
 - Todo el estado vive en memoria: al recargar se vuelve a la bienvenida.
 - El pago y la entrega son ficticios; no se pide ni procesa ningún dato bancario.
 - La evaluación es demostrativa: **las respuestas no se guardan ni se envían**.

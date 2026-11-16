@@ -18,6 +18,11 @@ export const notices = {
   feedback: 'Demostración: tus respuestas no se guardan ni se envían',
 } as const
 
+export const limits = {
+  /** Unidades máximas de un mismo plato por pedido */
+  maxPerDish: 5,
+} as const
+
 /** Duraciones de la simulación, en milisegundos */
 export const timings = {
   paymentProcessing: 1400,
