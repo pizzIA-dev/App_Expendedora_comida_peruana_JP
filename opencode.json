@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "CLAUDE.md",
+    "ESTADO_PROYECTO.md",
+    "PLANNING.md",
+    "STACK_TECNICO.md"
+  ],
+  "mcp": {
+    "obsidian-vault": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "D:/Obsidian_vaults/Proyectos_PizzIA/App_Expendedora_comida_peruana_JP"
+      ],
+      "enabled": true
+    }
+  }
+}

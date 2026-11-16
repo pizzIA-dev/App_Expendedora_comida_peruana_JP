@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "obsidian-vault": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "D:/Obsidian_vaults/Proyectos_PizzIA/App_Expendedora_comida_peruana_JP"
+      ]
+    }
+  }
+}
