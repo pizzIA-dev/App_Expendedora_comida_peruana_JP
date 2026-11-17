@@ -4,7 +4,7 @@
 
 ## Etapa actual
 
-**M0 — maqueta navegable: implementada y verificada en local. Demo publicada en Vercel desde `main`. Ajustes previos a la demostración (avisos, diez platos) sin commit. Sin etiqueta.**
+**M0 — maqueta navegable: implementada y verificada en local. Demo publicada en Vercel desde `main` (commit `6901487`). Fotos de Commons para los cinco platos nuevos sin commit. Sin etiqueta.**
 
 ## Hecho
 
@@ -12,7 +12,7 @@
   (Bricolage Grotesque + DM Sans vía `@fontsource-variable`).
 - Siete pantallas: bienvenida, catálogo, detalle, resumen, pago simulado, entrega simulada, evaluación.
 - Catálogo de diez platos en `src/data/dishes.json`: cinco del Word (precios del Word) y cinco de
-  ejemplo con ilustración provisional; tallarines rojos y olluquito agotados. En kiosco la grilla
+  ejemplo con foto de Wikimedia Commons (créditos en `docs/assets.md`); tallarines rojos y olluquito agotados. En kiosco la grilla
   desplaza en vertical; en móvil «Ver mi pedido» queda fijo abajo.
 - Aviso de simulación solo en resumen y pago; se quitó de cabecera, bienvenida, catálogo y entrega.
 - Pedido con varios platos y cantidades (máx. 5 por plato); se agrega desde el catálogo o desde el detalle.

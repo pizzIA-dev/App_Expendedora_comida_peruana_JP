@@ -51,6 +51,12 @@ Bienvenida → Catálogo → Detalle → Resumen → Pago simulado → Entrega s
 - Marca, avisos y duración de la simulación: `src/config/brand.ts`.
 - Colores y tipografías: bloque `@theme` de `src/index.css`.
 
+## Créditos de imágenes
+
+Fotos de tacu tacu, carapulcra, causa limeña, papa a la huancaína y olluquito: Wikimedia Commons
+(Dtarazona, CC BY-SA 3.0; autor no indicado, CC BY 3.0; F Delventhal, CC BY 2.0; AgainErick,
+CC BY-SA 3.0; Miguel Alan Córdova Silva, CC BY-SA 4.0). Detalle en `docs/assets.md`.
+
 ## Documentación
 
 - `PLANNING.md` — alcance y reglas por etapa.

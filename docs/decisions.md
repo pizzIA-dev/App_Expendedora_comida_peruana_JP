@@ -29,8 +29,8 @@
 | Catálogo | 5 platos en una fila | 10 platos (5 nuevos con ilustración provisional SVG); en kiosco la grilla desplaza en vertical y en móvil «Ver mi pedido» queda fijo abajo |
 
 Los cinco platos nuevos (tacu tacu, carapulcra, causa limeña, papa a la huancaína, olluquito)
-no están en el Word: precios, ingredientes y alérgenos son de ejemplo y sus imágenes son
-ilustraciones provisionales en `public/images/*.svg`.
+no están en el Word: precios, ingredientes y alérgenos son de ejemplo. Sus fotos son de Wikimedia
+Commons con licencia libre (créditos en `assets.md`).
 
 El segundo cambio contradice el Word («una unidad por pedido», «sin carrito complejo») y
 PLANNING §15 (carrito multiproducto fuera de alcance). Lo pidió el usuario de forma explícita;
