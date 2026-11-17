@@ -4,7 +4,7 @@
 
 ## Etapa actual
 
-**M0 — maqueta navegable: implementada y verificada en local. Primer commit en GitHub; los cambios de la primera revisión están sin commit. Sin etiqueta y sin demo publicada.**
+**M0 — maqueta navegable: implementada y verificada en local. Commits `d4c20fa` y `fc418d4` en GitHub (`main`). Sin etiqueta y sin demo publicada.**
 
 ## Hecho
 
@@ -39,9 +39,10 @@
 ## Pendiente de M0
 
 - [x] Primer commit subido a GitHub (`d4c20fa`).
-- [ ] Commit de los cambios de la primera revisión (carrito, cancelar al menú).
+- [x] Commit de los cambios de la primera revisión subido a GitHub (`fc418d4`).
 - [ ] Etiqueta `m0-maqueta`.
-- [ ] Publicar demo (Vercel, plan gratuito) — requiere que el usuario inicie sesión en Vercel.
+- [x] Demo publicada en Vercel (plan Hobby): https://app-expendedora-comida-peruana-jp.vercel.app/
+      — despliegue automático desde `main`; flujo básico comprobado en producción.
 - [ ] Guardar capturas de las pantallas en `docs/screenshots/`.
 - [ ] Fotos definitivas: las actuales son recortes de las imágenes de referencia, de baja
       resolución (ver `docs/assets.md`).

@@ -5,6 +5,9 @@ Proyecto académico de Design Thinking.
 
 > **Simulación académica: no se realizará ningún cobro ni entrega real.**
 
+**Demo en línea:** <https://app-expendedora-comida-peruana-jp.vercel.app/> (Vercel, se actualiza
+sola con cada push a `main`).
+
 ## Requisitos
 
 - Node.js 20 o superior (probado con 24) y npm.
