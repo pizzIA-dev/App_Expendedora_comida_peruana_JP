@@ -24,6 +24,14 @@
 | Varios platos | Un plato, una unidad | Varios platos con cantidad (− / +), máximo 5 por plato |
 | Cancelar pedido | Volvía a la bienvenida | Vacía el pedido y vuelve al catálogo |
 
+| Avisos de simulación | En cabecera, bienvenida, catálogo y entrega | Solo en resumen y pago (donde hay cobro) |
+| Código de pedido | «código ficticio» en la entrega | Solo el código |
+| Catálogo | 5 platos en una fila | 10 platos (5 nuevos con ilustración provisional SVG); en kiosco la grilla desplaza en vertical y en móvil «Ver mi pedido» queda fijo abajo |
+
+Los cinco platos nuevos (tacu tacu, carapulcra, causa limeña, papa a la huancaína, olluquito)
+no están en el Word: precios, ingredientes y alérgenos son de ejemplo y sus imágenes son
+ilustraciones provisionales en `public/images/*.svg`.
+
 El segundo cambio contradice el Word («una unidad por pedido», «sin carrito complejo») y
 PLANNING §15 (carrito multiproducto fuera de alcance). Lo pidió el usuario de forma explícita;
 conviene que el equipo lo sepa por si el docente evalúa contra el Word.

@@ -4,18 +4,21 @@
 
 ## Etapa actual
 
-**M0 — maqueta navegable: implementada y verificada en local. Commits `d4c20fa` y `fc418d4` en GitHub (`main`). Sin etiqueta y sin demo publicada.**
+**M0 — maqueta navegable: implementada y verificada en local. Demo publicada en Vercel desde `main`. Ajustes previos a la demostración (avisos, diez platos) sin commit. Sin etiqueta.**
 
 ## Hecho
 
 - Proyecto base: React 19, Vite 8, TypeScript 7, Tailwind CSS 4, lucide-react, fuentes locales
   (Bricolage Grotesque + DM Sans vía `@fontsource-variable`).
 - Siete pantallas: bienvenida, catálogo, detalle, resumen, pago simulado, entrega simulada, evaluación.
-- Catálogo de cinco platos en `src/data/dishes.json` con precios del Word; tallarines rojos agotado.
+- Catálogo de diez platos en `src/data/dishes.json`: cinco del Word (precios del Word) y cinco de
+  ejemplo con ilustración provisional; tallarines rojos y olluquito agotados. En kiosco la grilla
+  desplaza en vertical; en móvil «Ver mi pedido» queda fijo abajo.
+- Aviso de simulación solo en resumen y pago; se quitó de cabecera, bienvenida, catálogo y entrega.
 - Pedido con varios platos y cantidades (máx. 5 por plato); se agrega desde el catálogo o desde el detalle.
 - Flujo y guardas en el reducer: agotados bloqueados, editar el pedido limpia el método de pago,
   cancelar pide confirmación y vuelve al catálogo, pago exige método y bloquea doble toque.
-- Indicador de cuatro etapas, avisos de simulación, marca provisional «Sazón al Paso».
+- Indicador de cuatro etapas, marca provisional «Sazón al Paso».
 - Configuración de agentes: `opencode.json`, `.mcp.json`, `.agents/mcp_config.json` y plugin
   apuntando al vault de este proyecto.
 - Documentación: `README.md`, `CLAUDE.md`, `AGENTS.md`, `docs/`.
@@ -27,7 +30,8 @@
 - Reglas comprobadas en navegador: agotado no se puede agregar, agregar desde catálogo y detalle,
   sumar/restar/eliminar, tope de 5, totales correctos, cancelar vuelve al catálogo vacío, vaciar el
   resumen vuelve al catálogo, doble toque en «Simular pago» produce un solo pedido, finalizar reinicia.
-- Sin scroll horizontal ni contenido recortado a 1920×1080, 1366×768 y 390×844.
+- Sin scroll horizontal ni contenido recortado a 1920×1080, 1366×768 y 390×844 (y, tras el catálogo
+  de diez platos, también a 1024×600 y 768×1024).
 
 ## No verificado
 
@@ -51,6 +55,9 @@
 ## Siguiente etapa (no iniciar sin pedido explícito)
 
 V1: sesiones anónimas, eventos, Supabase, evaluación guardada, CSV. Ver `PLANNING.md` §13.
+Agregar o editar platos sin tocar código (panel de administración) **está excluido** en el
+planning («No crear un panel administrativo»); hoy se editan en `src/data/dishes.json`.
+Sería una ampliación a decidir con el equipo.
 
 ## Decisiones tomadas
 

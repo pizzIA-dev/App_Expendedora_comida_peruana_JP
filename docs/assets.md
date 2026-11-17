@@ -9,6 +9,7 @@
 | `arroz-con-pollo.jpg` | Recorte de `docs/references/ref-02-catalogo.jpg` | Baja resolución |
 | `seco-de-pollo.jpg` | Recorte de `docs/references/ref-02-catalogo.jpg` | Baja resolución |
 | `tallarines-rojos.jpg` | Recorte de `docs/references/ref-02-catalogo.jpg` | Baja resolución |
+| `tacu-tacu.svg`, `carapulcra.svg`, `causa-limena.svg`, `papa-huancaina.svg`, `olluquito.svg` | Ilustración generada (plato genérico + «foto pendiente») | Sustituir por foto real; si es `.jpg`, cambiar también `image` en `dishes.json` |
 
 Las imágenes de referencia las proporcionó el equipo. Los recortes sirven para la maqueta;
 conviene sustituirlos por fotos propias o con licencia clara, de al menos 1200 px de ancho,

@@ -1,6 +1,6 @@
-import { Clock, FlaskConical, UtensilsCrossed } from 'lucide-react'
+import { Clock, UtensilsCrossed } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { brand, notices } from '../config/brand'
+import { brand } from '../config/brand'
 
 const timeFormat = new Intl.DateTimeFormat('es-PE', { hour: 'numeric', minute: '2-digit', hour12: true })
 
@@ -34,15 +34,7 @@ export function Header() {
       </p>
 
       <div className="ml-auto flex items-center gap-4">
-        <p
-          title={notices.simulation}
-          className="flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-[0.85rem] font-bold text-accent-ink"
-        >
-          <FlaskConical aria-hidden className="size-4 shrink-0" />
-          <span className="hidden sm:inline">{notices.simulationShort}</span>
-          <span className="sm:hidden">Simulación</span>
-        </p>
-        <p className="hidden items-center gap-2 font-display text-[1.1rem] font-semibold text-ink sm:flex">
+        <p className="flex items-center gap-2 font-display text-[1.1rem] font-semibold text-ink">
           <Clock aria-hidden className="size-5 text-brand" />
           <time>{time}</time>
         </p>

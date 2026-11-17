@@ -40,7 +40,9 @@ npm run build      # typecheck + build de producción en dist/
 - Agotados bloqueados en la interfaz **y** en el reducer.
 - Pago y entrega ficticios; nunca pedir datos bancarios ni mostrar logos de marcas de pago.
 - Marca provisional y configurable (`src/config/brand.ts`); no usar Vendomática/VMarket.
-- Avisos de simulación y de información alimentaria ilustrativa siempre visibles.
+- Aviso de simulación **solo donde hay cobro** (resumen y pago); en el resto de pantallas no se
+  repite (pedido del usuario, 2026-11-16). El detalle conserva el aviso de información alimentaria
+  referencial y la evaluación aclara que no guarda respuestas.
 
 ## Convenciones de código
 

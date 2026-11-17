@@ -4,7 +4,6 @@ import { ActionBar } from '../components/ActionBar'
 import { AvailabilityBadge } from '../components/AvailabilityBadge'
 import { Button } from '../components/Button'
 import { ConfirmDialog } from '../components/ConfirmDialog'
-import { Notice } from '../components/Notice'
 import { QuantityControl } from '../components/QuantityControl'
 import { ScreenTitle } from '../components/ScreenTitle'
 import { limits } from '../config/brand'
@@ -33,10 +32,12 @@ export function CatalogScreen() {
             Elige tu <span className="underline-accent">plato</span>
           </>
         }
-        subtitle="Agrega uno o varios platos a tu pedido."
+        subtitle="Agrega uno o varios platos. Desliza para ver más."
       />
 
-      <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 kiosk:min-h-0 kiosk:flex-1 kiosk:grid-cols-5 kiosk:gap-4">
+      {/* En kiosco la grilla tiene alto fijo y desplaza en vertical; la fila siguiente asoma
+          para que se note que hay más platos. El padding evita recortar el anillo de selección. */}
+      <ul className="catalog-scroll mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 kiosk:-mx-2 kiosk:min-h-0 kiosk:flex-1 kiosk:auto-rows-max kiosk:grid-cols-5 kiosk:gap-4 kiosk:overflow-y-auto kiosk:overscroll-contain kiosk:px-2 kiosk:pt-1 kiosk:pb-3">
         {dishes.map((dish) => {
           const quantity = quantityOf(state.items, dish.id)
           const inOrder = quantity > 0
@@ -47,7 +48,7 @@ export function CatalogScreen() {
                 inOrder ? 'border-brand ring-3 ring-brand/25' : 'border-line'
               }`}
             >
-              <div className="relative h-32 sm:h-40 kiosk:h-auto kiosk:min-h-0 kiosk:flex-1">
+              <div className="relative h-32 sm:h-40 kiosk:h-[9.5rem]">
                 <img
                   src={dish.image}
                   alt={dish.imageAlt}
@@ -64,8 +65,8 @@ export function CatalogScreen() {
                 />
               </div>
 
-              <div className="flex flex-col gap-2 p-3 kiosk:p-3.5">
-                <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+              <div className="flex flex-1 flex-col gap-2 p-3 kiosk:p-3.5">
+                <div className="flex flex-col items-start gap-1">
                   <h2 className="text-[1.2rem] font-bold text-brand kiosk:text-[1.35rem]">{dish.name}</h2>
                   <span className="rounded-full bg-mint px-3 py-0.5 font-display text-[1.15rem] font-extrabold text-brand">
                     {formatSoles(dish.priceCents)}
@@ -74,6 +75,8 @@ export function CatalogScreen() {
                 <p className="hidden text-[0.92rem] leading-snug text-ink-soft sm:line-clamp-2 kiosk:min-h-[2.5em]">
                   {dish.shortDescription}
                 </p>
+                {/* Empuja los botones al fondo para que queden alineados entre tarjetas */}
+                <span aria-hidden className="mt-auto" />
 
                 {inOrder ? (
                   <QuantityControl
@@ -117,18 +120,32 @@ export function CatalogScreen() {
         })}
       </ul>
 
+      {/* Móvil: con varios platos la lista es larga; el acceso al pedido queda fijo abajo */}
+      {count > 0 && (
+        <div className="sticky bottom-0 z-20 -mx-4 mt-4 border-t border-line bg-paper/95 px-4 py-3 backdrop-blur kiosk:hidden">
+          <Button variant="primary" size="lg" className="w-full" onClick={() => dispatch({ type: 'GO_TO_SUMMARY' })}>
+            <ShoppingBasket aria-hidden className="size-7" />
+            <span className="flex flex-col items-start leading-tight">
+              Ver mi pedido
+              <span className="text-[0.95rem] font-semibold opacity-90">
+                {pluralPlatos(count)} · {formatSoles(total)}
+              </span>
+            </span>
+            <ChevronRight aria-hidden className="ml-auto size-7" strokeWidth={3} />
+          </Button>
+        </div>
+      )}
+
       <ActionBar
         left={
-          <>
-            <Button onClick={goHome} className="whitespace-nowrap">
-              <ArrowLeft aria-hidden className="size-5" strokeWidth={2.6} />
-              Volver al inicio
-            </Button>
-            <Notice className="kiosk:whitespace-nowrap">Información alimentaria ilustrativa.</Notice>
-          </>
+          <Button onClick={goHome} className="whitespace-nowrap">
+            <ArrowLeft aria-hidden className="size-5" strokeWidth={2.6} />
+            Volver al inicio
+          </Button>
         }
         right={
-          <>
+          // En móvil, con pedido, la barra fija de arriba ya ofrece «Ver mi pedido»
+          <div className={count > 0 ? 'hidden kiosk:contents' : 'contents'}>
             <p id="order-hint" aria-live="polite" className="text-[1.05rem] font-semibold text-ink-soft kiosk:whitespace-nowrap">
               {count > 0 ? (
                 <>
@@ -150,7 +167,7 @@ export function CatalogScreen() {
               Ver mi pedido
               <ChevronRight aria-hidden className="size-7" strokeWidth={3} />
             </Button>
-          </>
+          </div>
         }
       />
 

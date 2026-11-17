@@ -1,8 +1,7 @@
 import { ChevronRight, ListChecks, Pointer, Soup, Timer, Utensils } from 'lucide-react'
 import { Button } from '../components/Button'
-import { Notice } from '../components/Notice'
 import { Sparks } from '../components/ScreenTitle'
-import { brand, notices } from '../config/brand'
+import { brand } from '../config/brand'
 import { dishes, formatSoles } from '../data/catalog'
 import { useOrder } from '../features/order/OrderContext'
 
@@ -61,8 +60,6 @@ export function WelcomeScreen() {
             </li>
           ))}
         </ul>
-
-        <Notice tone="warning">{notices.simulation}.</Notice>
       </div>
 
       {/* Composición de kiosco: plato circular sobre forma verde que sangra al borde */}

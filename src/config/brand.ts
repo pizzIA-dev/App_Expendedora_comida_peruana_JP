@@ -10,10 +10,12 @@ export const brand = {
   orderPrefix: 'SP',
 } as const
 
+/**
+ * Avisos visibles. Desde el 2026-11-16 (pedido del usuario) el aviso de simulación solo
+ * aparece donde hay cobro: resumen y pago.
+ */
 export const notices = {
-  simulation: 'Simulación académica: no se realizará ningún cobro ni entrega real',
-  simulationShort: 'Simulación académica',
-  food: 'Información alimentaria ilustrativa para esta simulación',
+  food: 'Información alimentaria referencial',
   bank: 'No ingreses datos bancarios reales',
   feedback: 'Demostración: tus respuestas no se guardan ni se envían',
 } as const

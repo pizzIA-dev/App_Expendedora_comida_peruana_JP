@@ -64,7 +64,7 @@ export function DeliveryScreen() {
             </div>
           </div>
           <figcaption className="mt-2 text-center text-[0.9rem] font-medium text-ink-soft">
-            Compartimento inferior · ilustración de la simulación
+            Compartimento inferior
           </figcaption>
         </figure>
 
@@ -91,7 +91,6 @@ export function DeliveryScreen() {
 
           <p className="rounded-full border border-line bg-white px-5 py-2 text-[1.1rem]">
             Pedido <strong className="font-display text-[1.3rem] text-brand">{state.orderCode}</strong>
-            <span className="text-ink-soft"> · código ficticio</span>
           </p>
 
           <ul className="flex flex-wrap gap-2" aria-label="Platos de tu pedido">
@@ -113,8 +112,8 @@ export function DeliveryScreen() {
             </p>
             <p className="mt-2 text-[1.2rem] text-ink">
               {ready
-                ? 'Retira tu almuerzo del compartimento inferior (simulación).'
-                : 'Tu almuerzo estará listo en unos segundos (simulación).'}
+                ? 'Retira tu almuerzo del compartimento inferior.'
+                : 'Tu almuerzo estará listo en unos segundos.'}
             </p>
           </div>
         </div>
