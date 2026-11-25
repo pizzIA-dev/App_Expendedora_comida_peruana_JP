@@ -37,9 +37,10 @@ export function CatalogScreen() {
         subtitle="Agrega uno o varios platos. Desliza para ver más."
       />
 
-      {/* En kiosco la grilla tiene alto fijo y desplaza en vertical; la fila siguiente asoma
-          para que se note que hay más platos. El padding evita recortar el anillo de selección. */}
-      <ul className="catalog-scroll mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 kiosk:-mx-2 kiosk:min-h-0 kiosk:flex-1 kiosk:auto-rows-max kiosk:grid-cols-5 kiosk:gap-4 kiosk:overflow-y-auto kiosk:overscroll-contain kiosk:px-2 kiosk:pt-1 kiosk:pb-3">
+      {/* En kiosco la grilla desplaza en vertical. Cada fila mide el alto visible menos un poco,
+          así la tarjeta entera (con sus botones) siempre cabe y la fila siguiente asoma para que
+          se note que hay más platos. El padding evita recortar el anillo de selección. */}
+      <ul className="catalog-scroll mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 kiosk:-mx-2 kiosk:min-h-0 kiosk:flex-1 kiosk:auto-rows-[minmax(calc(100%_-_1.75rem),auto)] kiosk:grid-cols-5 kiosk:gap-4 kiosk:overflow-y-auto kiosk:overscroll-contain kiosk:px-2 kiosk:pt-1 kiosk:pb-3">
         {catalogOrder(dishes, state.stock).map((dish) => {
           const quantity = quantityOf(state.items, dish.id)
           const inOrder = quantity > 0
@@ -52,7 +53,8 @@ export function CatalogScreen() {
                 inOrder ? 'border-brand ring-3 ring-brand/25' : 'border-line'
               }`}
             >
-              <div className="relative h-32 sm:h-40 kiosk:h-[9.5rem]">
+              {/* En kiosco la foto ocupa el espacio que deja el texto: se agranda en pantallas altas */}
+              <div className="relative h-32 sm:h-40 kiosk:h-auto kiosk:min-h-[5rem] kiosk:flex-1">
                 <img
                   src={dish.image}
                   alt={dish.imageAlt}
@@ -77,7 +79,7 @@ export function CatalogScreen() {
                 />
               </div>
 
-              <div className="flex flex-1 flex-col gap-2 p-3 kiosk:p-3.5">
+              <div className="flex flex-1 flex-col gap-2 p-3 kiosk:flex-none kiosk:p-3.5">
                 <div className="flex flex-col items-start gap-1">
                   <h2 className="text-[1.2rem] font-bold text-brand kiosk:text-[1.35rem]">{dish.name}</h2>
                   <span className="rounded-full bg-mint px-3 py-0.5 font-display text-[1.15rem] font-extrabold text-brand">

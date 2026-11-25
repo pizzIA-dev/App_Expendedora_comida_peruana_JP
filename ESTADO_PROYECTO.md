@@ -4,7 +4,7 @@
 
 ## Etapa actual
 
-**Maqueta V2 del cliente (primera iteración): publicada en `main` (URL principal de Vercel). La V1 del primer testeo queda congelada en la rama `v1`. Sigue siendo M0 en términos de PLANNING (sin backend).**
+**Maqueta V2 del cliente (primera iteración): publicada en `main` (URL principal de Vercel). Ajuste de escala en kiosco sin commit. La V1 del primer testeo queda congelada en la rama `v1`. Sigue siendo M0 en términos de PLANNING (sin backend).**
 
 ## Hecho
 
@@ -23,6 +23,10 @@
 - Menú ordenado: sugeridos primero, el resto alfabético y los agotados al final (un plato que se
   agota en una compra simulada pasa al final).
 - En kiosco la grilla del catálogo desplaza en vertical; en móvil «Ver mi pedido» queda fijo abajo.
+- Kiosco escala por ancho **y** alto (el menor): en ventanas anchas y bajas (navegador con barras)
+  la barra inferior ya no tapa los botones de las tarjetas. Cada fila del catálogo cabe entera en el
+  alto visible y la siguiente asoma. Medido a 1920×1080, 1920×915, 1536×730, 1366×768, 1366×657,
+  1280×620, 1280×1024 y 1024×600.
 - Aviso de simulación solo en resumen y pago; se quitó de cabecera, bienvenida, catálogo y entrega.
 - Pedido con varios platos y cantidades; se agrega desde el catálogo o desde el detalle.
 - Flujo y guardas en el reducer: agotados bloqueados, editar el pedido limpia el método de pago,

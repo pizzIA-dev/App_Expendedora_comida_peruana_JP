@@ -47,6 +47,7 @@ Fuente: `Primera iteración.docx` + capturas de conversación con el cliente.
 | Stock | `stock` por plato en `dishes.json`; baja con cada compra simulada dentro de la sesión y vuelve al valor inicial al recargar |
 | Límite | 5 platos por pedido en total (imagen «Límite por pedido: máximo 5 platos»); el Word no da número |
 | Agotado | Foto a color con velo claro, etiqueta «Agotado» |
+| Escala en kiosco | Pedido del usuario (2026-11-25): la barra inferior tapaba los botones en ventanas anchas y bajas. La raíz escala por el menor entre ancho y alto, y las filas del catálogo miden el alto visible |
 | Orden del menú | Pedido del usuario (2026-11-25): sugeridos primero, resto alfabético, agotados al final (según el stock de la sesión) |
 | Calentamiento | **No se implementa**: el cliente lo descartó (lo mostrarán con un microondas en su video) |
 | Envase | Sección «Presentación y conservación» en el detalle |

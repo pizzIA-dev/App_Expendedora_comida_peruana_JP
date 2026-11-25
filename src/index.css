@@ -79,10 +79,15 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  /* En kiosco todo escala con el ancho: 1366×768 y 1920×1080 se ven iguales */
+  /*
+   * En kiosco todo escala con la pantalla: 1366×768 y 1920×1080 se ven iguales.
+   * Se usa el menor entre ancho y alto para que en ventanas anchas y bajas (navegador con
+   * barras, portátiles) el contenido no crezca más de lo que cabe en altura.
+   * 2.07vh equivale a 1.06vw + 1.4px en una pantalla 16:9.
+   */
   @media (min-width: 1024px) and (min-height: 560px) {
     html {
-      font-size: clamp(14px, 1.06vw + 1.4px, 24px);
+      font-size: clamp(13px, min(1.06vw + 1.4px, 2.07vh), 24px);
     }
   }
 

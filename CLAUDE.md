@@ -58,7 +58,9 @@ npm run build      # typecheck + build de producción en dist/
 - Navegación sin router: `state.screen` en `src/features/order/orderReducer.ts`. Toda guarda
   de flujo va en el reducer; los botones solo despachan acciones.
 - Variante `kiosk:` = horizontal (≥1024 px de ancho y ≥560 px de alto): la pantalla cabe sin
-  scroll y todo escala con `rem`. Fuera de `kiosk:` es móvil con scroll vertical natural.
+  scroll y todo escala con `rem`. La raíz usa el **menor** entre ancho y alto
+  (`min(1.06vw + 1.4px, 2.07vh)`), así una ventana ancha y baja no se desborda. En el catálogo cada
+  fila mide el alto visible y la foto absorbe la diferencia. Fuera de `kiosk:` es móvil con scroll.
 - Botones con `src/components/Button.tsx` (mínimo 56 px). Iconos solo de `lucide-react`.
 - Textos de interfaz en español; avisos y marca desde `src/config/brand.ts`.
 - Verificar cambios visuales en 1920×1080, 1366×768 y 390×844.
