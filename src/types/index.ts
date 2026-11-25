@@ -48,9 +48,14 @@ export type Screen =
   | 'catalog'
   | 'detail'
   | 'summary'
+  | 'heating'
   | 'payment'
+  | 'warming'
   | 'delivery'
   | 'feedback'
+
+/** Preparación elegida antes de pagar: calentar en la máquina o recibir sin calentar */
+export type HeatingChoice = 'heat' | 'none'
 
 export type PaymentMethod = 'wallet' | 'card'
 

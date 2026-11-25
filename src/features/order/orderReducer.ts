@@ -1,6 +1,6 @@
 import { dishes, findDish } from '../../data/catalog'
 import { normalizeSauceIds } from '../../data/sauces'
-import type { OrderItem, PaymentMethod, PaymentStatus, Screen } from '../../types'
+import type { HeatingChoice, OrderItem, PaymentMethod, PaymentStatus, Screen } from '../../types'
 import { addBlockReason, lineIdOf, type StockMap } from './orderSelectors'
 
 export interface OrderState {
@@ -9,6 +9,8 @@ export interface OrderState {
   viewingDishId: string | null
   /** Platos del pedido, en el orden en que se agregaron */
   items: OrderItem[]
+  /** null hasta que el cliente elige en la pantalla de calentamiento */
+  heating: HeatingChoice | null
   paymentMethod: PaymentMethod | null
   paymentStatus: PaymentStatus
   orderCode: string | null
@@ -26,6 +28,7 @@ export const initialState: OrderState = {
   screen: 'welcome',
   viewingDishId: null,
   items: [],
+  heating: null,
   paymentMethod: null,
   paymentStatus: 'idle',
   orderCode: null,
@@ -47,12 +50,20 @@ export type OrderAction =
   | { type: 'GO_TO_SUMMARY' }
   | { type: 'ADD_MORE' }
   | { type: 'CLEAR_ORDER' }
+  /** Resumen → elección de calentamiento */
+  | { type: 'GO_TO_HEATING' }
+  | { type: 'CHOOSE_HEATING'; heating: HeatingChoice }
+  /** Calentamiento → pago (requiere haber elegido) */
   | { type: 'GO_TO_PAYMENT' }
+  /** Calentamiento → resumen */
   | { type: 'BACK_TO_SUMMARY' }
+  /** Pago → calentamiento */
+  | { type: 'BACK_TO_HEATING' }
   | { type: 'CHOOSE_METHOD'; method: PaymentMethod }
   | { type: 'PAY' }
   | { type: 'PAYMENT_APPROVED' }
   | { type: 'PAYMENT_DONE'; orderCode: string }
+  | { type: 'WARMING_DONE' }
   | { type: 'DELIVERY_READY' }
   | { type: 'OPEN_FEEDBACK' }
   | { type: 'RESET' }
@@ -148,13 +159,25 @@ export function orderReducer(state: OrderState, action: OrderAction): OrderState
       if (state.screen !== 'summary' && state.screen !== 'catalog') return state
       return { ...state, screen: 'catalog', items: [], paymentMethod: null }
 
-    case 'GO_TO_PAYMENT':
+    case 'GO_TO_HEATING':
       if (state.screen !== 'summary' || state.items.length === 0) return state
+      return { ...state, screen: 'heating' }
+
+    case 'CHOOSE_HEATING':
+      if (state.screen !== 'heating') return state
+      return { ...state, heating: action.heating }
+
+    case 'GO_TO_PAYMENT':
+      if (state.screen !== 'heating' || state.items.length === 0 || !state.heating) return state
       return { ...state, screen: 'payment' }
 
     case 'BACK_TO_SUMMARY':
-      if (state.screen !== 'payment' || state.paymentStatus !== 'idle') return state
+      if (state.screen !== 'heating') return state
       return { ...state, screen: 'summary' }
+
+    case 'BACK_TO_HEATING':
+      if (state.screen !== 'payment' || state.paymentStatus !== 'idle') return state
+      return { ...state, screen: 'heating' }
 
     case 'CHOOSE_METHOD':
       if (state.screen !== 'payment' || state.paymentStatus !== 'idle') return state
@@ -175,8 +198,14 @@ export function orderReducer(state: OrderState, action: OrderAction): OrderState
       // La compra simulada descuenta el stock de la sesión
       const stock = { ...state.stock }
       for (const item of state.items) stock[item.dishId] = Math.max(0, (stock[item.dishId] ?? 0) - item.quantity)
-      return { ...state, screen: 'delivery', orderCode: action.orderCode, deliveryReady: false, stock }
+      // Si eligió calentar, pasa antes por la pantalla de calentamiento
+      const screen = state.heating === 'heat' ? 'warming' : 'delivery'
+      return { ...state, screen, orderCode: action.orderCode, deliveryReady: false, stock }
     }
+
+    case 'WARMING_DONE':
+      if (state.screen !== 'warming') return state
+      return { ...state, screen: 'delivery' }
 
     case 'DELIVERY_READY':
       if (state.screen !== 'delivery') return state

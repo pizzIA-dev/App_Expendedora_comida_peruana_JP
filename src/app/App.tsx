@@ -6,8 +6,10 @@ import { CatalogScreen } from '../screens/CatalogScreen'
 import { DeliveryScreen } from '../screens/DeliveryScreen'
 import { DetailScreen } from '../screens/DetailScreen'
 import { FeedbackScreen } from '../screens/FeedbackScreen'
+import { HeatingScreen } from '../screens/HeatingScreen'
 import { PaymentScreen } from '../screens/PaymentScreen'
 import { SummaryScreen } from '../screens/SummaryScreen'
+import { WarmingScreen } from '../screens/WarmingScreen'
 import { WelcomeScreen } from '../screens/WelcomeScreen'
 import type { Screen } from '../types'
 
@@ -17,7 +19,10 @@ const STEP_BY_SCREEN: Record<Screen, number | null> = {
   catalog: 0,
   detail: 0,
   summary: 1,
+  // La elección de calentamiento es parte de «Confirmar»: el indicador sigue con cuatro etapas
+  heating: 1,
   payment: 2,
+  warming: 3,
   delivery: 3,
   feedback: null,
 }
@@ -27,7 +32,9 @@ const SCREENS: Record<Screen, () => React.JSX.Element> = {
   catalog: CatalogScreen,
   detail: DetailScreen,
   summary: SummaryScreen,
+  heating: HeatingScreen,
   payment: PaymentScreen,
+  warming: WarmingScreen,
   delivery: DeliveryScreen,
   feedback: FeedbackScreen,
 }

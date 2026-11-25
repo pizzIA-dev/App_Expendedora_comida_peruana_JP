@@ -115,7 +115,9 @@ export function DeliveryScreen() {
             </p>
             <p className="mt-2 text-[1.2rem] text-ink">
               {ready
-                ? 'Retira tu almuerzo del compartimento inferior.'
+                ? state.heating === 'heat'
+                  ? 'Retira tu almuerzo caliente del compartimento inferior.'
+                  : 'Retira tu almuerzo del compartimento inferior.'
                 : 'Tu almuerzo estará listo en unos segundos.'}
             </p>
           </div>

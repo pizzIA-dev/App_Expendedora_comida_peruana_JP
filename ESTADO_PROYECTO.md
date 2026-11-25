@@ -10,7 +10,8 @@
 
 - Proyecto base: React 19, Vite 8, TypeScript 7, Tailwind CSS 4, lucide-react, fuentes locales
   (Bricolage Grotesque + DM Sans vía `@fontsource-variable`).
-- Siete pantallas: bienvenida, catálogo, detalle, resumen, pago simulado, entrega simulada, evaluación.
+- Nueve pantallas: bienvenida, catálogo, detalle, resumen, calentamiento (elección), pago simulado,
+  calentando (solo si eligió calentar), entrega simulada, evaluación.
 - Catálogo de 11 platos en `src/data/dishes.json`: 5 del Word, 3 de ejemplo (tacu tacu, carapulcra,
   olluquito) y 3 pedidos por el cliente (arroz chaufa, pollo a la plancha, tallarines verdes).
   Cada plato tiene `stock` (0 = agotado: tallarines rojos y olluquito).
@@ -31,7 +32,12 @@
 - Pedido con varios platos y cantidades; se agrega desde el catálogo o desde el detalle.
 - Flujo y guardas en el reducer: agotados bloqueados, editar el pedido limpia el método de pago,
   cancelar pide confirmación y vuelve al catálogo, pago exige método y bloquea doble toque.
-- Indicador de cuatro etapas, marca provisional «Sazón al Paso».
+- Calentamiento: tras el resumen, «¿Cómo deseas recibir tu comida?» (calentamiento rápido / sin
+  calentamiento, obligatorio) y luego el pago. Si eligió calentar, tras el pago aparece «Calentando tu
+  pedido» con barra de avance (6,5 s, `timings.warming`) y pasa sola a la entrega («Retira tu almuerzo
+  caliente…»). Verificado en 1920×1080, 1366×768 y 390×844 (sin desborde).
+- Indicador de cuatro etapas (la elección de calentamiento cuenta como «Confirmar» y el calentamiento
+  como «Retirar»), marca provisional «Sazón al Paso».
 - Configuración de agentes: `opencode.json`, `.mcp.json`, `.agents/mcp_config.json` y plugin
   apuntando al vault de este proyecto.
 - Documentación: `README.md`, `CLAUDE.md`, `AGENTS.md`, `docs/`.

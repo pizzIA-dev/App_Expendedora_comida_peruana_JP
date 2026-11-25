@@ -41,4 +41,6 @@ export const timings = {
   paymentProcessing: 1400,
   paymentApproved: 1100,
   dispatch: 3800,
+  /** Calentamiento ficticio tras el pago (en una máquina real serían 1–2 minutos) */
+  warming: 6500,
 } as const

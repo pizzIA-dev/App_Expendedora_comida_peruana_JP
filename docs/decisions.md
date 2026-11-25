@@ -49,7 +49,7 @@ Fuente: `Primera iteración.docx` + capturas de conversación con el cliente.
 | Agotado | Foto a color con velo claro, etiqueta «Agotado» |
 | Escala en kiosco | Pedido del usuario (2026-11-25): la barra inferior tapaba los botones en ventanas anchas y bajas. La raíz escala por el menor entre ancho y alto, y las filas del catálogo miden el alto visible |
 | Orden del menú | Pedido del usuario (2026-11-25): sugeridos primero, resto alfabético, agotados al final (según el stock de la sesión) |
-| Calentamiento | **No se implementa**: el cliente lo descartó (lo mostrarán con un microondas en su video) |
+| Calentamiento | 2026-11-24 se descartó; **2026-11-25 se retoma** por pedido del usuario: elección antes del pago (etapa «Confirmar», el indicador sigue con 4 etapas) y pantalla «Calentando tu pedido» tras el pago solo si se eligió calentar. Sin «Ten en cuenta» |
 | Envase | Sección «Presentación y conservación» en el detalle |
 | Entradas | Se quitan papa a la huancaína y causa limeña: el cliente no pidió entradas |
 | Categorías y buscador de la imagen | No se implementan; el cliente pidió mantener el aspecto de la primera versión |

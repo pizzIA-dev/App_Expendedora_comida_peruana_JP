@@ -156,7 +156,7 @@ export function PaymentScreen() {
 
       <ActionBar
         left={
-          <Button disabled={busy} onClick={() => dispatch({ type: 'BACK_TO_SUMMARY' })}>
+          <Button disabled={busy} onClick={() => dispatch({ type: 'BACK_TO_HEATING' })}>
             <ArrowLeft aria-hidden className="size-5" strokeWidth={2.6} />
             Volver
           </Button>

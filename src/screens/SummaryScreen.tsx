@@ -1,4 +1,4 @@
-import { ChevronRight, CreditCard, Info, Plus, ShoppingBasket, Trash2, X } from 'lucide-react'
+import { ChevronRight, Info, Plus, ShoppingBasket, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
 import { ActionBar } from '../components/ActionBar'
 import { Button } from '../components/Button'
@@ -141,9 +141,8 @@ export function SummaryScreen() {
           </>
         }
         right={
-          <Button variant="primary" size="lg" onClick={() => dispatch({ type: 'GO_TO_PAYMENT' })}>
-            <CreditCard aria-hidden className="size-7" />
-            Continuar al pago
+          <Button variant="primary" size="lg" onClick={() => dispatch({ type: 'GO_TO_HEATING' })}>
+            Continuar
             <ChevronRight aria-hidden className="size-7" strokeWidth={3} />
           </Button>
         }

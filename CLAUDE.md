@@ -41,8 +41,10 @@ npm run build      # typecheck + build de producción en dist/
   todos los platos (`src/data/sauces.ts`): ají amarillo, crema de rocoto, mayonesa y ketchup. Cada combinación plato + salsas es una línea del pedido.
 - Agotado (stock 0): etiqueta «Agotado», selección bloqueada, foto **a color** (sin gris).
 - Orden del menú (`catalogOrder`): sugeridos primero, luego alfabético y los agotados al final.
-- **Sin opción de calentamiento**: el cliente la descartó (2026-11-24), aunque el Word de la
-  primera iteración la pida.
+- **Calentamiento** (retomado el 2026-11-25): pantalla «¿Cómo deseas recibir tu comida?»
+  (`HeatingScreen`) entre el resumen y el pago, dentro de la etapa «Confirmar»; elección obligatoria
+  (calentar / sin calentar). Tras el pago, solo si eligió calentar, `WarmingScreen` con barra de avance
+  y luego la entrega. Sin el recuadro «Ten en cuenta» de la referencia.
 - Cancelar el pedido lo vacía y vuelve al **menú**, no a la bienvenida.
 - Precios del Word (céntimos en `src/data/dishes.json`), no los de las imágenes de referencia.
 - Agotados bloqueados en la interfaz **y** en el reducer.
