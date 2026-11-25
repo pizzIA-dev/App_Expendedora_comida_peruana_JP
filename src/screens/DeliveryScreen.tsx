@@ -95,8 +95,11 @@ export function DeliveryScreen() {
 
           <ul className="flex flex-wrap gap-2" aria-label="Platos de tu pedido">
             {lines.map((line) => (
-              <li key={line.dish.id} className="rounded-full bg-mint px-4 py-1.5 text-[1.05rem] font-semibold text-brand">
+              <li key={line.lineId} className="rounded-full bg-mint px-4 py-1.5 text-[1.05rem] font-semibold text-brand">
                 {line.quantity} × {line.dish.name}
+                {line.sauces.length > 0 && (
+                  <span className="font-normal text-ink-soft"> · {line.sauces.map((s) => s.name).join(', ')}</span>
+                )}
               </li>
             ))}
           </ul>

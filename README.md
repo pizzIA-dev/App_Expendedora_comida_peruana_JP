@@ -5,8 +5,10 @@ Proyecto académico de Design Thinking.
 
 > **Simulación académica: no se realizará ningún cobro ni entrega real.**
 
-**Demo en línea:** <https://app-expendedora-comida-peruana-jp.vercel.app/> (Vercel, se actualiza
-sola con cada push a `main`).
+**Demo en línea (V2, versión vigente):** <https://app-expendedora-comida-peruana-jp.vercel.app/>
+(Vercel, se actualiza sola con cada push a `main`).
+**V1 (primer testeo):** rama `v1`; copia en <https://app-expendedora-comida-peruana-opjd8z4a6-pizz-ia.vercel.app/>
+(despliegue inmutable de Vercel; se abre sin iniciar sesión solo si *Vercel Authentication* está desactivado).
 
 ## Requisitos
 
@@ -37,7 +39,9 @@ Bienvenida → Catálogo → Detalle → Resumen → Pago simulado → Entrega s
 
 ## Límites de M0
 
-- El pedido admite varios platos, con un máximo de 5 unidades por plato.
+- El pedido admite varios platos: máximo 5 por pedido y, por plato, lo que haya en stock.
+- Salsas y cremas sin costo, elegidas al agregar cada plato: varias por plato, sin repetir.
+- El stock baja con cada compra simulada y vuelve a su valor inicial al recargar la página.
 - Todo el estado vive en memoria: al recargar se vuelve a la bienvenida.
 - El pago y la entrega son ficticios; no se pide ni procesa ningún dato bancario.
 - La evaluación es demostrativa: **las respuestas no se guardan ni se envían**.
@@ -47,15 +51,18 @@ Bienvenida → Catálogo → Detalle → Resumen → Pago simulado → Entrega s
 
 ## Editar contenido
 
-- Platos y precios: `src/data/dishes.json` (precios en céntimos).
+- Platos, precios y stock: `src/data/dishes.json` (precios en céntimos).
+- Salsas (iguales para todos los platos) y sus fotos: `src/data/sauces.ts`, `public/images/salsas/`.
+- Límite de platos por pedido y texto del envase: `src/config/brand.ts`.
 - Marca, avisos y duración de la simulación: `src/config/brand.ts`.
 - Colores y tipografías: bloque `@theme` de `src/index.css`.
 
 ## Créditos de imágenes
 
-Fotos de tacu tacu, carapulcra, causa limeña, papa a la huancaína y olluquito: Wikimedia Commons
-(Dtarazona, CC BY-SA 3.0; autor no indicado, CC BY 3.0; F Delventhal, CC BY 2.0; AgainErick,
-CC BY-SA 3.0; Miguel Alan Córdova Silva, CC BY-SA 4.0). Detalle en `docs/assets.md`.
+Fotos de olluquito, arroz chaufa, pollo a la plancha y tallarines verdes: Wikimedia Commons
+(Dtarazona, CC BY-SA 3.0 y dominio público; Miguel Alan Córdova Silva, CC BY-SA 4.0; Ovruni,
+CC BY-SA 4.0). Fotos de tacu tacu y carapulcra: proporcionadas por el equipo (origen por confirmar). Fotos de salsas: proporcionadas por el
+equipo (origen por confirmar). Detalle en `docs/assets.md`.
 
 ## Documentación
 

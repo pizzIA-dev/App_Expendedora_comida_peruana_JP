@@ -1,4 +1,4 @@
-import { ArrowLeft, ChevronRight, Plus, ShoppingBasket, Star, Utensils } from 'lucide-react'
+import { ArrowLeft, ChevronRight, Plus, ShoppingBasket, Sparkles, Star, Utensils } from 'lucide-react'
 import { useState } from 'react'
 import { ActionBar } from '../components/ActionBar'
 import { AvailabilityBadge } from '../components/AvailabilityBadge'
@@ -6,14 +6,16 @@ import { Button } from '../components/Button'
 import { ConfirmDialog } from '../components/ConfirmDialog'
 import { QuantityControl } from '../components/QuantityControl'
 import { ScreenTitle } from '../components/ScreenTitle'
-import { limits } from '../config/brand'
 import { dishes, formatSoles } from '../data/catalog'
 import { useOrder } from '../features/order/OrderContext'
-import { orderCount, orderTotalCents, pluralPlatos, quantityOf } from '../features/order/orderSelectors'
+import { limits } from '../config/brand'
+import { catalogOrder, orderCount, orderTotalCents, quantityOf, stockOf } from '../features/order/orderSelectors'
+import { useAddDish } from '../features/order/useAddDish'
 
 export function CatalogScreen() {
   const { state, dispatch } = useOrder()
   const [confirmExit, setConfirmExit] = useState(false)
+  const { addDish, isBlocked, ui: addDishUi } = useAddDish()
   const count = orderCount(state.items)
   const total = orderTotalCents(state.items)
 
@@ -38,9 +40,11 @@ export function CatalogScreen() {
       {/* En kiosco la grilla tiene alto fijo y desplaza en vertical; la fila siguiente asoma
           para que se note que hay más platos. El padding evita recortar el anillo de selección. */}
       <ul className="catalog-scroll mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 kiosk:-mx-2 kiosk:min-h-0 kiosk:flex-1 kiosk:auto-rows-max kiosk:grid-cols-5 kiosk:gap-4 kiosk:overflow-y-auto kiosk:overscroll-contain kiosk:px-2 kiosk:pt-1 kiosk:pb-3">
-        {dishes.map((dish) => {
+        {catalogOrder(dishes, state.stock).map((dish) => {
           const quantity = quantityOf(state.items, dish.id)
           const inOrder = quantity > 0
+          const stock = stockOf(state.stock, dish.id)
+          const soldOut = stock <= 0
           return (
             <li
               key={dish.id}
@@ -52,16 +56,24 @@ export function CatalogScreen() {
                 <img
                   src={dish.image}
                   alt={dish.imageAlt}
-                  className={`absolute inset-0 size-full object-cover ${dish.available ? '' : 'opacity-70 grayscale'}`}
+                  className="absolute inset-0 size-full object-cover"
                 />
-                {dish.featured && (
+                {/* Agotado: la foto se mantiene a color, solo con un velo claro */}
+                {soldOut && <span aria-hidden className="absolute inset-0 bg-white/35" />}
+                {dish.featured ? (
                   <span className="absolute top-2.5 left-2.5 inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-[0.85rem] font-bold text-ink">
                     <Star aria-hidden className="size-4 fill-current" /> Sugerencia
                   </span>
+                ) : (
+                  dish.isNew && (
+                    <span className="absolute top-2.5 left-2.5 inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-[0.85rem] font-bold text-ink">
+                      <Sparkles aria-hidden className="size-4" /> Nuevo
+                    </span>
+                  )
                 )}
                 <AvailabilityBadge
-                  available={dish.available}
-                  className={`absolute bottom-2.5 left-2.5 shadow-card ${dish.available ? 'bg-white' : ''}`}
+                  stock={stock}
+                  className={`absolute bottom-2.5 left-2.5 shadow-card ${soldOut ? '' : 'bg-white'}`}
                 />
               </div>
 
@@ -82,19 +94,19 @@ export function CatalogScreen() {
                   <QuantityControl
                     dishName={dish.name}
                     quantity={quantity}
-                    incrementDisabled={quantity >= limits.maxPerDish}
-                    onDecrement={() => dispatch({ type: 'DECREMENT_ITEM', dishId: dish.id })}
-                    onIncrement={() => dispatch({ type: 'ADD_ITEM', dishId: dish.id })}
+                    incrementBlocked={isBlocked(dish.id)}
+                    onDecrement={() => dispatch({ type: 'DECREMENT_DISH', dishId: dish.id })}
+                    onIncrement={() => addDish(dish)}
                   />
                 ) : (
                   <Button
                     variant="primary"
                     className="w-full px-3 shadow-none"
-                    disabled={!dish.available}
-                    aria-label={dish.available ? `Agregar ${dish.name} al pedido` : `${dish.name} está agotado`}
-                    onClick={() => dispatch({ type: 'ADD_ITEM', dishId: dish.id })}
+                    disabled={soldOut}
+                    aria-label={soldOut ? `${dish.name} está agotado` : `Agregar ${dish.name} al pedido`}
+                    onClick={() => addDish(dish)}
                   >
-                    {dish.available ? (
+                    {!soldOut ? (
                       <>
                         <Plus aria-hidden className="size-5" strokeWidth={3} />
                         Agregar
@@ -128,7 +140,7 @@ export function CatalogScreen() {
             <span className="flex flex-col items-start leading-tight">
               Ver mi pedido
               <span className="text-[0.95rem] font-semibold opacity-90">
-                {pluralPlatos(count)} · {formatSoles(total)}
+                {count} de {limits.maxPerOrder} platos · {formatSoles(total)}
               </span>
             </span>
             <ChevronRight aria-hidden className="ml-auto size-7" strokeWidth={3} />
@@ -149,11 +161,11 @@ export function CatalogScreen() {
             <p id="order-hint" aria-live="polite" className="text-[1.05rem] font-semibold text-ink-soft kiosk:whitespace-nowrap">
               {count > 0 ? (
                 <>
-                  Tu pedido: <strong className="text-brand">{pluralPlatos(count)}</strong> ·{' '}
+                  Tu pedido: <strong className="text-brand">{count} de {limits.maxPerOrder} platos</strong> ·{' '}
                   <strong className="text-brand">{formatSoles(total)}</strong>
                 </>
               ) : (
-                'Agrega al menos un plato para continuar.'
+                `Agrega hasta ${limits.maxPerOrder} platos por pedido.`
               )}
             </p>
             <Button
@@ -180,6 +192,7 @@ export function CatalogScreen() {
         onConfirm={() => dispatch({ type: 'RESET' })}
         onCancel={() => setConfirmExit(false)}
       />
+      {addDishUi}
     </>
   )
 }

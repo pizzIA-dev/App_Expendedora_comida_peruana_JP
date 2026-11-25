@@ -33,8 +33,16 @@ npm run build      # typecheck + build de producción en dist/
 ## Reglas del producto que no se negocian
 
 - Indicador de **cuatro** etapas: Elegir → Confirmar → Pagar → Retirar.
-- Pedido con **varios platos y cantidades** (máximo 5 por plato, `limits.maxPerDish`). Cambio pedido
-  por el usuario el 2026-11-16; sustituye la regla «una unidad» del Word y de PLANNING.
+- Pedido con **varios platos y cantidades**: máximo **5 platos por pedido en total**
+  (`limits.maxPerOrder`) y, por plato, como máximo su **stock** (`stock` en `dishes.json`).
+  Mensajes: «Has alcanzado la cantidad disponible de este plato» / máximo por pedido.
+- Al agregar un plato se abre la ventana «¿Deseas agregar una salsa o crema?» (`SaucePicker`):
+  se pueden marcar **varias salsas, sin repetir ninguna**, o ninguna. Las salsas son las mismas para
+  todos los platos (`src/data/sauces.ts`): ají amarillo, crema de rocoto, mayonesa y ketchup. Cada combinación plato + salsas es una línea del pedido.
+- Agotado (stock 0): etiqueta «Agotado», selección bloqueada, foto **a color** (sin gris).
+- Orden del menú (`catalogOrder`): sugeridos primero, luego alfabético y los agotados al final.
+- **Sin opción de calentamiento**: el cliente la descartó (2026-11-24), aunque el Word de la
+  primera iteración la pida.
 - Cancelar el pedido lo vacía y vuelve al **menú**, no a la bienvenida.
 - Precios del Word (céntimos en `src/data/dishes.json`), no los de las imágenes de referencia.
 - Agotados bloqueados en la interfaz **y** en el reducer.
@@ -65,5 +73,9 @@ npm run build      # typecheck + build de producción en dist/
 
 ## Git
 
-- Rama única `main`; cada entrega se congela con una etiqueta (`m0-maqueta`, `v1`, …).
+- `main` = versión vigente (V2 del cliente), publicada en la URL principal de Vercel.
+- `v1` = maqueta del primer testeo, congelada en `1d38525`. **No hacer commits en `v1`.**
+  Su copia accesible es el despliegue inmutable de ese commit en Vercel:
+  `app-expendedora-comida-peruana-opjd8z4a6-pizz-ia.vercel.app` (requiere que el usuario desactive
+  *Vercel Authentication* en *Deployment Protection* para abrirse sin iniciar sesión).
 - No hacer commit ni push sin que el usuario lo pida.

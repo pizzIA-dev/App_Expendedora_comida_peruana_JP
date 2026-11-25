@@ -8,8 +8,11 @@ export interface Dish {
   imageAlt: string
   /** El dinero se guarda siempre en céntimos */
   priceCents: number
-  available: boolean
+  /** Unidades disponibles al iniciar la demo; 0 = agotado */
+  stock: number
   featured?: boolean
+  /** Muestra la etiqueta «Nuevo» */
+  isNew?: boolean
   portion: string
   ingredients: string[]
   allergens: string[]
@@ -21,8 +24,22 @@ export interface Dish {
   contentStatus: 'provisional' | 'revisado'
 }
 
+export interface Sauce {
+  id: string
+  name: string
+  /** Foto de la salsa (public/images/salsas) */
+  image: string
+}
+
+/**
+ * Una línea del pedido = un plato con una combinación concreta de salsas.
+ * El mismo plato con otra combinación ocupa otra línea.
+ */
 export interface OrderItem {
+  lineId: string
   dishId: string
+  /** Salsas elegidas, sin repetir y en el orden del catálogo de salsas; vacío = sin acompañamiento */
+  sauceIds: string[]
   quantity: number
 }
 

@@ -1,17 +1,18 @@
-import { ArrowLeft, Ban, CalendarClock, ChevronRight, Leaf, ShoppingBasket, Snowflake, Soup, Star, TriangleAlert } from 'lucide-react'
+import { ArrowLeft, Ban, CalendarClock, ChevronRight, Leaf, Package, ShoppingBasket, Snowflake, Soup, Sparkles, Star, TriangleAlert } from 'lucide-react'
 import { ActionBar } from '../components/ActionBar'
 import { AvailabilityBadge } from '../components/AvailabilityBadge'
 import { Button } from '../components/Button'
-import { Notice } from '../components/Notice'
 import { Sparks } from '../components/ScreenTitle'
-import { limits, notices } from '../config/brand'
+import { notices, packaging } from '../config/brand'
 import { findDish, formatSoles } from '../data/catalog'
 import { useOrder } from '../features/order/OrderContext'
-import { quantityOf } from '../features/order/orderSelectors'
+import { quantityOf, stockOf } from '../features/order/orderSelectors'
+import { useAddDish } from '../features/order/useAddDish'
 
 export function DetailScreen() {
   const { state, dispatch } = useOrder()
   const dish = findDish(state.viewingDishId)
+  const { addDish, isBlocked, ui: addDishUi } = useAddDish()
 
   // Pantalla protegida: sin plato válido no hay nada que mostrar
   if (!dish) {
@@ -23,9 +24,9 @@ export function DetailScreen() {
   }
 
   const quantity = quantityOf(state.items, dish.id)
-  const atLimit = quantity >= limits.maxPerDish
-  const canAdd = dish.available && !atLimit
-  const dishId = dish.id
+  const stock = stockOf(state.stock, dish.id)
+  const soldOut = stock <= 0
+  const blocked = isBlocked(dish.id)
 
   const facts = [
     { icon: Soup, label: 'Porción', value: dish.portion },
@@ -40,34 +41,44 @@ export function DetailScreen() {
           <img
             src={dish.image}
             alt={dish.imageAlt}
-            className={`absolute inset-0 size-full object-cover ${dish.available ? '' : 'opacity-75 grayscale'}`}
+            className="absolute inset-0 size-full object-cover"
           />
-          {dish.featured && (
+          {soldOut && <span aria-hidden className="absolute inset-0 bg-white/35" />}
+          {(dish.featured || dish.isNew) && (
             <span className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 font-display text-[1rem] font-bold text-ink">
-              <Star aria-hidden className="size-5 fill-current" /> Sugerencia
+              {dish.featured ? (
+                <>
+                  <Star aria-hidden className="size-5 fill-current" /> Sugerencia
+                </>
+              ) : (
+                <>
+                  <Sparkles aria-hidden className="size-5" /> Nuevo
+                </>
+              )}
             </span>
           )}
         </figure>
 
-        <div className="flex flex-col gap-3 kiosk:min-h-0 kiosk:gap-3.5">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <h1
-              tabIndex={-1}
-              data-screen-title
-              className="relative pr-10 text-[2.4rem] font-extrabold text-brand kiosk:text-[3.3rem]"
-            >
-              {dish.name}
-              <Sparks className="absolute -top-1 right-0 size-8" />
-            </h1>
-            <p className="rounded-full bg-mint px-5 py-2 font-display text-[2rem] leading-none font-extrabold text-brand">
+        {/* En kiosco la columna desplaza si el contenido no cabe (no debe quedar bajo los botones) */}
+        <div className="flex flex-col gap-3 kiosk:min-h-0 kiosk:gap-2.5 kiosk:overflow-y-auto kiosk:pr-1">
+          <h1
+            tabIndex={-1}
+            data-screen-title
+            className="relative pr-10 text-[2.4rem] font-extrabold text-brand kiosk:text-[2.7rem]"
+          >
+            {dish.name}
+            <Sparks className="absolute -top-1 right-0 size-8" />
+          </h1>
+
+          <p className="text-[1.15rem] text-ink-soft kiosk:text-[1.05rem] kiosk:leading-snug">{dish.description}</p>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="rounded-full bg-mint px-5 py-2 font-display text-[1.9rem] leading-none font-extrabold text-brand">
               <span className="sr-only">Precio: </span>
               {formatSoles(dish.priceCents)}
             </p>
+            <AvailabilityBadge stock={stock} />
           </div>
-
-          <p className="text-[1.15rem] text-ink-soft">{dish.description}</p>
-
-          <AvailabilityBadge available={dish.available} className="self-start" />
 
           <dl className="grid gap-2.5 sm:grid-cols-3">
             {facts.map(({ icon: Icon, label, value }) => (
@@ -99,13 +110,23 @@ export function DetailScreen() {
                   <li key={a}>{a}.</li>
                 ))}
               </ul>
+              <p className="mt-1.5 text-[0.85rem] text-ink-soft">
+                {notices.food}
+                {dish.contentStatus === 'provisional' && ', pendiente de revisión'}.
+              </p>
             </section>
           </div>
 
-          <Notice>
-            {notices.food}.
-            {dish.contentStatus === 'provisional' && ' Contenido provisional, pendiente de revisión.'}
-          </Notice>
+          <section className="flex items-start gap-3 rounded-2xl border border-line bg-white px-4 py-3">
+            <span aria-hidden className="grid size-10 shrink-0 place-items-center rounded-xl bg-mint text-brand">
+              <Package className="size-5" />
+            </span>
+            <div>
+              <h2 className="text-[1.1rem] font-bold text-brand">{packaging.title}</h2>
+              <p className="mt-0.5 text-[0.98rem] leading-snug text-ink">{packaging.body}</p>
+            </div>
+          </section>
+
         </div>
       </div>
 
@@ -118,27 +139,27 @@ export function DetailScreen() {
         }
         right={
           <>
-            {!dish.available ? (
+            {soldOut ? (
               <p id="add-hint" className="text-[1rem] font-semibold text-ink-soft">
                 Este plato está agotado. Elige otro del menú.
               </p>
             ) : (
               quantity > 0 && (
                 <p id="add-hint" className="text-[1rem] font-semibold text-ink-soft">
-                  {atLimit
-                    ? `Ya tienes ${quantity} en tu pedido (máximo por plato).`
-                    : `Ya tienes ${quantity} en tu pedido.`}
+                  Ya tienes {quantity} en tu pedido.
                 </p>
               )
             )}
             <Button
               variant="primary"
               size="lg"
-              disabled={!canAdd}
-              aria-describedby={!dish.available || quantity > 0 ? 'add-hint' : undefined}
-              onClick={() => dispatch({ type: 'ADD_ITEM', dishId })}
+              disabled={soldOut}
+              aria-disabled={blocked || undefined}
+              aria-describedby={soldOut || quantity > 0 ? 'add-hint' : undefined}
+              className={blocked && !soldOut ? 'opacity-60' : ''}
+              onClick={() => addDish(dish)}
             >
-              {dish.available ? (
+              {!soldOut ? (
                 <>
                   <ShoppingBasket aria-hidden className="size-7" />
                   {quantity > 0 ? 'Agregar otro' : 'Agregar al pedido'}
@@ -154,6 +175,7 @@ export function DetailScreen() {
           </>
         }
       />
+      {addDishUi}
     </>
   )
 }

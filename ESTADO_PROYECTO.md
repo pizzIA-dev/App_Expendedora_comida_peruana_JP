@@ -1,21 +1,30 @@
 # Estado del proyecto
 
-Última actualización: 2026-11-16
+Última actualización: 2026-11-25
 
 ## Etapa actual
 
-**M0 — maqueta navegable: implementada y verificada en local. Demo publicada en Vercel desde `main` (commit `6901487`). Fotos de Commons para los cinco platos nuevos sin commit. Sin etiqueta.**
+**Maqueta V2 del cliente (primera iteración): publicada en `main` (URL principal de Vercel). La V1 del primer testeo queda congelada en la rama `v1`. Sigue siendo M0 en términos de PLANNING (sin backend).**
 
 ## Hecho
 
 - Proyecto base: React 19, Vite 8, TypeScript 7, Tailwind CSS 4, lucide-react, fuentes locales
   (Bricolage Grotesque + DM Sans vía `@fontsource-variable`).
 - Siete pantallas: bienvenida, catálogo, detalle, resumen, pago simulado, entrega simulada, evaluación.
-- Catálogo de diez platos en `src/data/dishes.json`: cinco del Word (precios del Word) y cinco de
-  ejemplo con foto de Wikimedia Commons (créditos en `docs/assets.md`); tallarines rojos y olluquito agotados. En kiosco la grilla
-  desplaza en vertical; en móvil «Ver mi pedido» queda fijo abajo.
+- Catálogo de 11 platos en `src/data/dishes.json`: 5 del Word, 3 de ejemplo (tacu tacu, carapulcra,
+  olluquito) y 3 pedidos por el cliente (arroz chaufa, pollo a la plancha, tallarines verdes).
+  Cada plato tiene `stock` (0 = agotado: tallarines rojos y olluquito).
+- Salsas y cremas: ventana «¿Deseas agregar una salsa o crema?» al agregar un plato, con fotos reales;
+  se pueden marcar varias sin repetir (ají amarillo, crema de rocoto, mayonesa, ketchup) o ninguna; sin costo;
+  iguales para todos los platos. Cada plato + combinación de salsas es una línea del pedido.
+- Límite de 5 platos por pedido en total y, por plato, su stock; mensajes al intentar superarlos.
+  El stock baja con cada compra simulada (en memoria; vuelve al inicial al recargar).
+- Agotado con la foto a color; sección «Presentación y conservación» en el detalle; etiqueta «Nuevo».
+- Menú ordenado: sugeridos primero, el resto alfabético y los agotados al final (un plato que se
+  agota en una compra simulada pasa al final).
+- En kiosco la grilla del catálogo desplaza en vertical; en móvil «Ver mi pedido» queda fijo abajo.
 - Aviso de simulación solo en resumen y pago; se quitó de cabecera, bienvenida, catálogo y entrega.
-- Pedido con varios platos y cantidades (máx. 5 por plato); se agrega desde el catálogo o desde el detalle.
+- Pedido con varios platos y cantidades; se agrega desde el catálogo o desde el detalle.
 - Flujo y guardas en el reducer: agotados bloqueados, editar el pedido limpia el método de pago,
   cancelar pide confirmación y vuelve al catálogo, pago exige método y bloquea doble toque.
 - Indicador de cuatro etapas, marca provisional «Sazón al Paso».
@@ -23,7 +32,22 @@
   apuntando al vault de este proyecto.
 - Documentación: `README.md`, `CLAUDE.md`, `AGENTS.md`, `docs/`.
 
-## Verificado (2026-11-16)
+## Verificado (2026-11-25, salsas múltiples)
+
+- Typecheck y build. Varias salsas por plato; la misma combinación en otro orden suma a la misma
+  línea; «Sin acompañamiento» desmarca todo. Con 4 salsas (fotos del usuario) la ventana cabe sin
+  desplazarse a 1366×768, 1024×600 y 390×844.
+
+## Verificado (2026-11-24, V2)
+
+- Typecheck y build correctos.
+- En navegador: ventana de salsas (elegir, omitir, cerrar), dos líneas del mismo plato con salsas
+  distintas, stock (mensaje al superar 3 de carapulcra), límite de 5 (mensaje), agotados bloqueados,
+  totales, pago completo y descuento de stock en la siguiente compra.
+- Sin desbordes a 1920×1080, 1366×768, 768×1024 y 390×844. A 1024×600 la columna del detalle
+  desplaza (no cabe entera), sin quedar bajo los botones.
+
+## Verificado (2026-11-16, V1)
 
 - `npm run typecheck` y `npm run build` sin errores.
 - Recorrido completo en navegador a 1366×768, revisando visualmente las siete pantallas.
@@ -39,6 +63,14 @@
   probó tecla a tecla).
 - Contraste medido con herramienta; la paleta se eligió para cumplir AA pero no se auditó.
 - Dispositivos táctiles reales.
+
+## Pendiente
+
+- [x] V2 subida a `main` (2026-11-25); Vercel la publica en la URL principal.
+- [ ] V1 accesible: el usuario debe desactivar *Vercel Authentication* (Settings → Deployment
+      Protection) para que `…-opjd8z4a6-pizz-ia.vercel.app` (V1) se abra sin iniciar sesión.
+- [ ] El equipo define precios de los 3 platos nuevos y valida stock inicial y salsas por plato.
+- [ ] Foto propia de tallarines verdes con pollo (la actual es referencial, con filete apanado).
 
 ## Pendiente de M0
 

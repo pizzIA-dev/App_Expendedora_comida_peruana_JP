@@ -9,13 +9,26 @@
 | `arroz-con-pollo.jpg` | Recorte de `docs/references/ref-02-catalogo.jpg` | Baja resolución |
 | `seco-de-pollo.jpg` | Recorte de `docs/references/ref-02-catalogo.jpg` | Baja resolución |
 | `tallarines-rojos.jpg` | Recorte de `docs/references/ref-02-catalogo.jpg` | Baja resolución |
-| `tacu-tacu.jpg` | Wikimedia Commons, «Tacu-tacu con carne apanada y sarsa criolla 10102009.jpg» — Dtarazona, CC BY-SA 3.0 | Versión de 1280 px |
-| `carapulcra.jpg` | Wikimedia Commons, «Carapulcra.jpg» — autor sin dato legible en Commons, CC BY 3.0 | Versión de 1280 px |
-| `causa-limena.jpg` | Wikimedia Commons, «Causa a la Limeña (48836160237).jpg» — F Delventhal, CC BY 2.0 | Versión de 1280 px |
-| `papa-huancaina.jpg` | Wikimedia Commons, «Cuisine Perú Papa a la Huancaína.jpg» — AgainErick, CC BY-SA 3.0 | Versión de 1280 px |
+| `tacu-tacu.jpg` | Proporcionada por el usuario (2026-11-25) | Origen y licencia **no verificados**; 540 px de ancho |
+| `carapulcra.jpg` | Proporcionada por el usuario (2026-11-25) | Origen y licencia **no verificados**; 500 px de ancho; trae la firma «Marcos GP» en la esquina |
 | `olluquito.jpg` | Wikimedia Commons, «Olluquitos.jpg» — Miguel Alan Córdova Silva, CC BY-SA 4.0 | Versión de 1280 px |
+| `arroz-chaufa.jpg` | Wikimedia Commons, «Arroz chaufa simple.JPG» — Dtarazona, dominio público | Versión de 1200 px |
+| `pollo-plancha.jpg` | Wikimedia Commons, «Pollo a la Plancha.jpg» — Ovruni, CC BY-SA 4.0 | Versión de 1200 px |
+| `tallarines-verdes.jpg` | Wikimedia Commons, «Milanesa de res y tallarines al pesto 14062011.jpg» — Dtarazona, CC BY-SA 3.0 | **Referencial**: muestra filete apanado, no pollo; no hay foto libre de tallarines verdes con pollo |
 
-Las cinco fotos de Commons exigen citar autor y licencia (hecho aquí y en el README). Páginas de
+## Salsas (`public/images/salsas/`)
+
+| Archivo | Origen | Nota |
+|---|---|---|
+| `aji-amarillo.jpg` | Proporcionada por el usuario (2026-11-25) | Origen y licencia **no verificados** |
+| `rocoto.jpg` | Proporcionada por el usuario (2026-11-25) | Origen y licencia **no verificados** |
+| `mayonesa.jpg` | Proporcionada por el usuario (2026-11-25) | Origen y licencia **no verificados**; parece generada por IA y trae una marca de agua tenue |
+| `ketchup.jpg` | Proporcionada por el usuario (2026-11-25) | Origen y licencia **no verificados** |
+
+Las fotos de salsas las eligió el usuario y sustituyen a las de Commons. Si la maqueta se publica
+más allá del curso, conviene confirmar que se pueden usar o reemplazarlas por fotos propias.
+
+Las fotos de Commons con licencia CC exigen citar autor y licencia (hecho aquí y en el README). Páginas de
 origen: `https://commons.wikimedia.org/wiki/File:<nombre del archivo>`.
 
 Las imágenes de referencia las proporcionó el equipo. Los recortes sirven para la maqueta;

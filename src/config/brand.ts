@@ -21,8 +21,19 @@ export const notices = {
 } as const
 
 export const limits = {
-  /** Unidades máximas de un mismo plato por pedido */
-  maxPerDish: 5,
+  /**
+   * Platos como máximo por pedido, sumando todos (provisional, pedido del cliente en la
+   * primera iteración). Cada plato además está limitado por su stock.
+   */
+  maxPerOrder: 5,
+} as const
+
+/** Textos de la sección «Presentación y conservación» del detalle */
+export const packaging = {
+  title: 'Presentación y conservación',
+  body:
+    'Envase con compartimentos que separa los componentes del plato y conserva mejor su presentación. ' +
+    'Las salsas van en porciones individuales aparte.',
 } as const
 
 /** Duraciones de la simulación, en milisegundos */

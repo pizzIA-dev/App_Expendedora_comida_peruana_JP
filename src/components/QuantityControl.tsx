@@ -5,7 +5,11 @@ interface QuantityControlProps {
   quantity: number
   onDecrement: () => void
   onIncrement: () => void
-  incrementDisabled?: boolean
+  /**
+   * No se puede sumar (stock o límite del pedido). El botón sigue respondiendo para que
+   * la pantalla explique el motivo, pero se ve atenuado y se anuncia como no disponible.
+   */
+  incrementBlocked?: boolean
   className?: string
 }
 
@@ -13,13 +17,13 @@ const stepButton =
   'grid size-[max(2.75rem,44px)] shrink-0 place-items-center rounded-full transition active:scale-95 ' +
   'disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100'
 
-/** Control − cantidad +. Al llegar a 1, el botón de restar quita el plato. */
+/** Control − cantidad +. Al llegar a 1, el botón de restar quita la línea. */
 export function QuantityControl({
   dishName,
   quantity,
   onDecrement,
   onIncrement,
-  incrementDisabled = false,
+  incrementBlocked = false,
   className = '',
 }: QuantityControlProps) {
   const removes = quantity <= 1
@@ -44,9 +48,9 @@ export function QuantityControl({
       <button
         type="button"
         onClick={onIncrement}
-        disabled={incrementDisabled}
+        aria-disabled={incrementBlocked || undefined}
         aria-label={`Agregar una unidad de ${dishName}`}
-        className={`${stepButton} bg-brand text-white hover:bg-brand-deep`}
+        className={`${stepButton} bg-brand text-white hover:bg-brand-deep ${incrementBlocked ? 'opacity-40' : ''}`}
       >
         <Plus aria-hidden className="size-5" strokeWidth={3} />
       </button>

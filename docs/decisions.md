@@ -36,6 +36,27 @@ El segundo cambio contradice el Word («una unidad por pedido», «sin carrito c
 PLANNING §15 (carrito multiproducto fuera de alcance). Lo pidió el usuario de forma explícita;
 conviene que el equipo lo sepa por si el docente evalúa contra el Word.
 
+## Primera iteración del cliente — «V2» (2026-11-24)
+
+Fuente: `Primera iteración.docx` + capturas de conversación con el cliente.
+
+| Pedido | Decisión |
+|---|---|
+| 3 platos nuevos | Arroz chaufa de pollo, pollo a la plancha, tallarines verdes con pollo; precios referenciales S/ 14–15 (el equipo aún los define) |
+| Salsas y cremas | Ventana al agregar (no pantalla nueva, para mantener 4 etapas); ají amarillo, crema de rocoto, mayonesa o sin acompañamiento; sin costo. **Revisión del usuario (2026-11-25):** varias salsas por plato sin repetir, las mismas para todos los platos, con fotos reales; se agrega ketchup y las fotos son las que entregó el usuario |
+| Stock | `stock` por plato en `dishes.json`; baja con cada compra simulada dentro de la sesión y vuelve al valor inicial al recargar |
+| Límite | 5 platos por pedido en total (imagen «Límite por pedido: máximo 5 platos»); el Word no da número |
+| Agotado | Foto a color con velo claro, etiqueta «Agotado» |
+| Orden del menú | Pedido del usuario (2026-11-25): sugeridos primero, resto alfabético, agotados al final (según el stock de la sesión) |
+| Calentamiento | **No se implementa**: el cliente lo descartó (lo mostrarán con un microondas en su video) |
+| Envase | Sección «Presentación y conservación» en el detalle |
+| Entradas | Se quitan papa a la huancaína y causa limeña: el cliente no pidió entradas |
+| Categorías y buscador de la imagen | No se implementan; el cliente pidió mantener el aspecto de la primera versión |
+| V1 accesible | Rama `v1` congelada; Vercel no generó despliegue para la rama (mismo commit que producción). La copia accesible es la URL inmutable del despliegue de `1d38525` (`…-opjd8z4a6-pizz-ia.vercel.app`), que exige desactivar *Vercel Authentication* |
+
+«V1/V2» del cliente son iteraciones de la maqueta (sin backend). No confundir con la V1 de
+PLANNING (Supabase), que sigue sin empezar.
+
 ### Ramas
 
 Por ahora una sola rama. El planning ya exige congelar cada versión con una etiqueta y una URL

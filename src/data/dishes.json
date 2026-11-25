@@ -7,11 +7,24 @@
     "image": "/images/lomo-saltado.jpg",
     "imageAlt": "Plato de lomo saltado con arroz blanco y papas fritas",
     "priceCents": 1600,
-    "available": true,
+    "stock": 12,
     "featured": true,
     "portion": "Porción individual",
-    "ingredients": ["Carne de res", "cebolla", "tomate", "ají amarillo", "sillao", "vinagre", "aceite vegetal", "arroz", "papa"],
-    "allergens": ["Contiene soya (sillao)", "Puede contener trazas de gluten"],
+    "ingredients": [
+      "Carne de res",
+      "cebolla",
+      "tomate",
+      "ají amarillo",
+      "sillao",
+      "vinagre",
+      "aceite vegetal",
+      "arroz",
+      "papa"
+    ],
+    "allergens": [
+      "Contiene soya (sillao)",
+      "Puede contener trazas de gluten"
+    ],
     "preparation": "Hoy, 7:30 a. m.",
     "storage": "Refrigerado entre 4 °C y 8 °C",
     "contentStatus": "provisional"
@@ -24,10 +37,22 @@
     "image": "/images/aji-de-gallina.jpg",
     "imageAlt": "Plato de ají de gallina con arroz, huevo duro y aceituna",
     "priceCents": 1500,
-    "available": true,
+    "stock": 8,
     "portion": "Porción individual",
-    "ingredients": ["Pollo", "ají amarillo", "pan", "leche", "pecanas", "queso", "huevo", "aceituna", "arroz"],
-    "allergens": ["Contiene leche, huevo, gluten (pan) y frutos secos (pecanas)"],
+    "ingredients": [
+      "Pollo",
+      "ají amarillo",
+      "pan",
+      "leche",
+      "pecanas",
+      "queso",
+      "huevo",
+      "aceituna",
+      "arroz"
+    ],
+    "allergens": [
+      "Contiene leche, huevo, gluten (pan) y frutos secos (pecanas)"
+    ],
     "preparation": "Hoy, 7:30 a. m.",
     "storage": "Refrigerado entre 4 °C y 8 °C",
     "contentStatus": "provisional"
@@ -40,10 +65,22 @@
     "image": "/images/arroz-con-pollo.jpg",
     "imageAlt": "Plato de arroz con pollo con una presa dorada y salsa criolla",
     "priceCents": 1400,
-    "available": true,
+    "stock": 10,
     "portion": "Porción individual",
-    "ingredients": ["Pollo", "arroz", "culantro", "arvejas", "zanahoria", "ají amarillo", "cebolla", "limón"],
-    "allergens": ["Pendiente de revisión", "Puede contener trazas de gluten"],
+    "ingredients": [
+      "Pollo",
+      "arroz",
+      "culantro",
+      "arvejas",
+      "zanahoria",
+      "ají amarillo",
+      "cebolla",
+      "limón"
+    ],
+    "allergens": [
+      "Pendiente de revisión",
+      "Puede contener trazas de gluten"
+    ],
     "preparation": "Hoy, 7:30 a. m.",
     "storage": "Refrigerado entre 4 °C y 8 °C",
     "contentStatus": "provisional"
@@ -56,10 +93,22 @@
     "image": "/images/seco-de-pollo.jpg",
     "imageAlt": "Plato de seco de pollo con frejoles, arroz y salsa criolla",
     "priceCents": 1500,
-    "available": true,
+    "stock": 6,
     "portion": "Porción individual",
-    "ingredients": ["Pollo", "culantro", "frejoles", "arroz", "cebolla", "ají amarillo", "ajo", "limón"],
-    "allergens": ["Pendiente de revisión", "Puede contener trazas de gluten"],
+    "ingredients": [
+      "Pollo",
+      "culantro",
+      "frejoles",
+      "arroz",
+      "cebolla",
+      "ají amarillo",
+      "ajo",
+      "limón"
+    ],
+    "allergens": [
+      "Pendiente de revisión",
+      "Puede contener trazas de gluten"
+    ],
     "preparation": "Hoy, 7:30 a. m.",
     "storage": "Refrigerado entre 4 °C y 8 °C",
     "contentStatus": "provisional"
@@ -72,10 +121,22 @@
     "image": "/images/tallarines-rojos.jpg",
     "imageAlt": "Plato de tallarines rojos con pollo y queso rallado",
     "priceCents": 1300,
-    "available": false,
+    "stock": 0,
     "portion": "Porción individual",
-    "ingredients": ["Tallarines de trigo", "tomate", "zanahoria", "pollo", "cebolla", "ajo", "queso", "laurel"],
-    "allergens": ["Contiene gluten (trigo) y leche (queso)", "Puede contener huevo"],
+    "ingredients": [
+      "Tallarines de trigo",
+      "tomate",
+      "zanahoria",
+      "pollo",
+      "cebolla",
+      "ajo",
+      "queso",
+      "laurel"
+    ],
+    "allergens": [
+      "Contiene gluten (trigo) y leche (queso)",
+      "Puede contener huevo"
+    ],
     "preparation": "Hoy, 7:30 a. m.",
     "storage": "Refrigerado entre 4 °C y 8 °C",
     "contentStatus": "provisional"
@@ -83,15 +144,28 @@
   {
     "id": "tacu-tacu",
     "name": "Tacu tacu",
-    "shortDescription": "Arroz y frejoles dorados con carne apanada.",
-    "description": "Tortilla de arroz y frejoles dorada en sartén, acompañada de carne apanada y salsa criolla.",
+    "shortDescription": "Arroz y frejoles dorados con saltado de carne y salsa criolla.",
+    "description": "Tortilla de arroz y frejoles dorada en sartén, acompañada de saltado de carne con cebolla y tomate, y salsa criolla.",
     "image": "/images/tacu-tacu.jpg",
-    "imageAlt": "Plato de tacu tacu con carne apanada y salsa criolla",
+    "imageAlt": "Plato de tacu tacu con saltado de carne y salsa criolla",
     "priceCents": 1600,
-    "available": true,
+    "stock": 4,
     "portion": "Porción individual",
-    "ingredients": ["Arroz", "frejoles", "carne de res", "pan rallado", "huevo", "cebolla", "ají amarillo", "ajo", "limón"],
-    "allergens": ["Contiene gluten y huevo (apanado)", "Pendiente de revisión"],
+    "ingredients": [
+      "Arroz",
+      "frejoles",
+      "carne de res",
+      "cebolla",
+      "tomate",
+      "ají amarillo",
+      "sillao",
+      "ajo",
+      "limón"
+    ],
+    "allergens": [
+      "Contiene soya (sillao)",
+      "Pendiente de revisión"
+    ],
     "preparation": "Hoy, 7:30 a. m.",
     "storage": "Refrigerado entre 4 °C y 8 °C",
     "contentStatus": "provisional"
@@ -99,47 +173,27 @@
   {
     "id": "carapulcra",
     "name": "Carapulcra",
-    "shortDescription": "Papa seca guisada con cerdo y maní, con arroz.",
-    "description": "Guiso de papa seca con cerdo, ají panca y maní, servido con arroz blanco.",
+    "shortDescription": "Papa seca guisada con cerdo y maní, con sopa seca.",
+    "description": "Guiso de papa seca con cerdo, ají panca y maní, acompañado de sopa seca (tallarines al estilo chinchano).",
     "image": "/images/carapulcra.jpg",
-    "imageAlt": "Plato de carapulcra con arroz blanco",
+    "imageAlt": "Plato de carapulcra con cerdo y sopa seca de tallarines",
     "priceCents": 1500,
-    "available": true,
+    "stock": 3,
     "portion": "Porción individual",
-    "ingredients": ["Papa seca", "carne de cerdo", "ají panca", "maní", "cebolla", "ajo", "arroz"],
-    "allergens": ["Contiene maní", "Pendiente de revisión"],
-    "preparation": "Hoy, 7:30 a. m.",
-    "storage": "Refrigerado entre 4 °C y 8 °C",
-    "contentStatus": "provisional"
-  },
-  {
-    "id": "causa-limena",
-    "name": "Causa limeña",
-    "shortDescription": "Papa amarilla al limón rellena de pollo.",
-    "description": "Capas de papa amarilla sazonada con ají y limón, rellenas de pollo con mayonesa, palta y huevo.",
-    "image": "/images/causa-limena.jpg",
-    "imageAlt": "Causa limeña en capas con palta y huevo",
-    "priceCents": 1200,
-    "available": true,
-    "portion": "Porción individual",
-    "ingredients": ["Papa amarilla", "ají amarillo", "limón", "pollo", "mayonesa", "palta", "huevo", "aceituna"],
-    "allergens": ["Contiene huevo", "Pendiente de revisión"],
-    "preparation": "Hoy, 7:30 a. m.",
-    "storage": "Refrigerado entre 4 °C y 8 °C",
-    "contentStatus": "provisional"
-  },
-  {
-    "id": "papa-huancaina",
-    "name": "Papa a la huancaína",
-    "shortDescription": "Papa sancochada con crema de ají y queso.",
-    "description": "Papa sancochada bañada en crema de ají amarillo y queso fresco, con huevo y aceituna.",
-    "image": "/images/papa-huancaina.jpg",
-    "imageAlt": "Papa a la huancaína con huevo, aceitunas y lechuga",
-    "priceCents": 1000,
-    "available": true,
-    "portion": "Porción individual",
-    "ingredients": ["Papa", "ají amarillo", "queso fresco", "leche", "galleta", "huevo", "aceituna"],
-    "allergens": ["Contiene leche, huevo y gluten (galleta)"],
+    "ingredients": [
+      "Papa seca",
+      "carne de cerdo",
+      "ají panca",
+      "maní",
+      "cebolla",
+      "ajo",
+      "tallarines de trigo",
+      "albahaca"
+    ],
+    "allergens": [
+      "Contiene maní y gluten (tallarines)",
+      "Pendiente de revisión"
+    ],
     "preparation": "Hoy, 7:30 a. m.",
     "storage": "Refrigerado entre 4 °C y 8 °C",
     "contentStatus": "provisional"
@@ -152,10 +206,108 @@
     "image": "/images/olluquito.jpg",
     "imageAlt": "Plato de olluquito con carne y arroz blanco",
     "priceCents": 1400,
-    "available": false,
+    "stock": 0,
     "portion": "Porción individual",
-    "ingredients": ["Olluco", "carne de res", "ají panca", "cebolla", "ajo", "perejil", "arroz"],
-    "allergens": ["Pendiente de revisión"],
+    "ingredients": [
+      "Olluco",
+      "carne de res",
+      "ají panca",
+      "cebolla",
+      "ajo",
+      "perejil",
+      "arroz"
+    ],
+    "allergens": [
+      "Pendiente de revisión"
+    ],
+    "preparation": "Hoy, 7:30 a. m.",
+    "storage": "Refrigerado entre 4 °C y 8 °C",
+    "contentStatus": "provisional"
+  },
+  {
+    "id": "arroz-chaufa",
+    "name": "Arroz chaufa de pollo",
+    "shortDescription": "Arroz salteado al wok con pollo, huevo y cebolla china.",
+    "description": "Arroz salteado al wok al estilo peruano con pollo, huevo, cebolla china y sillao.",
+    "image": "/images/arroz-chaufa.jpg",
+    "imageAlt": "Plato de arroz chaufa",
+    "priceCents": 1400,
+    "stock": 5,
+    "isNew": true,
+    "portion": "Porción individual",
+    "ingredients": [
+      "Arroz",
+      "pollo",
+      "huevo",
+      "cebolla china",
+      "pimiento",
+      "sillao",
+      "kion",
+      "aceite de ajonjolí"
+    ],
+    "allergens": [
+      "Contiene soya (sillao), huevo y ajonjolí",
+      "Puede contener trazas de gluten"
+    ],
+    "preparation": "Hoy, 7:30 a. m.",
+    "storage": "Refrigerado entre 4 °C y 8 °C",
+    "contentStatus": "provisional"
+  },
+  {
+    "id": "pollo-plancha",
+    "name": "Pollo a la plancha",
+    "shortDescription": "Pechuga a la plancha con arroz y ensalada fresca.",
+    "description": "Pechuga de pollo a la plancha acompañada de arroz blanco y ensalada fresca. La ensalada va en un compartimento aparte.",
+    "image": "/images/pollo-plancha.jpg",
+    "imageAlt": "Pechuga de pollo a la plancha con ensalada",
+    "priceCents": 1500,
+    "stock": 4,
+    "isNew": true,
+    "portion": "Porción individual",
+    "ingredients": [
+      "Pechuga de pollo",
+      "arroz",
+      "lechuga",
+      "tomate",
+      "pepino",
+      "zanahoria",
+      "limón",
+      "aceite de oliva",
+      "ajo"
+    ],
+    "allergens": [
+      "Sin alérgenos principales declarados",
+      "Pendiente de revisión"
+    ],
+    "preparation": "Hoy, 7:30 a. m.",
+    "storage": "Refrigerado entre 4 °C y 8 °C",
+    "contentStatus": "provisional"
+  },
+  {
+    "id": "tallarines-verdes",
+    "name": "Tallarines verdes con pollo",
+    "shortDescription": "Tallarines en salsa de albahaca y espinaca con pollo.",
+    "description": "Tallarines en cremosa salsa verde de albahaca, espinaca y queso fresco, con pollo.",
+    "image": "/images/tallarines-verdes.jpg",
+    "imageAlt": "Plato de tallarines verdes con filete apanado (foto referencial)",
+    "priceCents": 1400,
+    "stock": 3,
+    "isNew": true,
+    "portion": "Porción individual",
+    "ingredients": [
+      "Tallarines de trigo",
+      "albahaca",
+      "espinaca",
+      "queso fresco",
+      "leche",
+      "pollo",
+      "ajo",
+      "cebolla"
+    ],
+    "allergens": [
+      "Contiene gluten (trigo) y leche (queso)",
+      "Puede contener frutos secos"
+    ],
     "preparation": "Hoy, 7:30 a. m.",
     "storage": "Refrigerado entre 4 °C y 8 °C",
     "contentStatus": "provisional"

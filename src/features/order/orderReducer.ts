@@ -1,6 +1,7 @@
-import { limits } from '../../config/brand'
-import { findDish } from '../../data/catalog'
+import { dishes, findDish } from '../../data/catalog'
+import { normalizeSauceIds } from '../../data/sauces'
 import type { OrderItem, PaymentMethod, PaymentStatus, Screen } from '../../types'
+import { addBlockReason, lineIdOf, type StockMap } from './orderSelectors'
 
 export interface OrderState {
   screen: Screen
@@ -12,7 +13,14 @@ export interface OrderState {
   paymentStatus: PaymentStatus
   orderCode: string | null
   deliveryReady: boolean
+  /**
+   * Stock de la sesión. Arranca con el de dishes.json, baja con cada compra simulada y se
+   * conserva entre pedidos; al recargar la página vuelve al valor inicial (sin backend).
+   */
+  stock: StockMap
 }
+
+export const initialStock: StockMap = Object.fromEntries(dishes.map((d) => [d.id, d.stock]))
 
 export const initialState: OrderState = {
   screen: 'welcome',
@@ -22,15 +30,20 @@ export const initialState: OrderState = {
   paymentStatus: 'idle',
   orderCode: null,
   deliveryReady: false,
+  stock: initialStock,
 }
 
 export type OrderAction =
   | { type: 'START' }
   | { type: 'VIEW_DISH'; dishId: string }
   | { type: 'BACK_TO_CATALOG' }
-  | { type: 'ADD_ITEM'; dishId: string }
-  | { type: 'DECREMENT_ITEM'; dishId: string }
-  | { type: 'REMOVE_ITEM'; dishId: string }
+  /** Agrega una unidad del plato con las salsas elegidas ([] = sin acompañamiento) */
+  | { type: 'ADD_ITEM'; dishId: string; sauceIds: string[] }
+  /** Quita una unidad del plato (de la última línea agregada), usado desde el menú */
+  | { type: 'DECREMENT_DISH'; dishId: string }
+  | { type: 'INCREMENT_LINE'; lineId: string }
+  | { type: 'DECREMENT_LINE'; lineId: string }
+  | { type: 'REMOVE_LINE'; lineId: string }
   | { type: 'GO_TO_SUMMARY' }
   | { type: 'ADD_MORE' }
   | { type: 'CLEAR_ORDER' }
@@ -60,7 +73,7 @@ function withItems(state: OrderState, items: OrderItem[]): OrderState {
 export function orderReducer(state: OrderState, action: OrderAction): OrderState {
   switch (action.type) {
     case 'START':
-      return { ...initialState, screen: 'catalog' }
+      return { ...initialState, stock: state.stock, screen: 'catalog' }
 
     case 'VIEW_DISH':
       if (state.screen !== 'catalog' || !findDish(action.dishId)) return state
@@ -73,32 +86,53 @@ export function orderReducer(state: OrderState, action: OrderAction): OrderState
     case 'ADD_ITEM': {
       if (!EDITABLE.includes(state.screen)) return state
       const dish = findDish(action.dishId)
-      if (!dish || !dish.available) return state
-      const current = state.items.find((i) => i.dishId === dish.id)
-      if (current && current.quantity >= limits.maxPerDish) return state
-      const items = current
-        ? state.items.map((i) => (i.dishId === dish.id ? { ...i, quantity: i.quantity + 1 } : i))
-        : [...state.items, { dishId: dish.id, quantity: 1 }]
+      if (!dish) return state
+      // Salsas existentes y sin repetir
+      const sauceIds = normalizeSauceIds(action.sauceIds)
+      if (!sauceIds) return state
+      if (addBlockReason(state.items, state.stock, dish.id)) return state
+      const lineId = lineIdOf(dish.id, sauceIds)
+      const exists = state.items.some((i) => i.lineId === lineId)
+      const items = exists
+        ? state.items.map((i) => (i.lineId === lineId ? { ...i, quantity: i.quantity + 1 } : i))
+        : [...state.items, { lineId, dishId: dish.id, sauceIds, quantity: 1 }]
       const next = withItems(state, items)
       // Desde el detalle se vuelve al menú para poder seguir eligiendo
       return state.screen === 'detail' ? { ...next, screen: 'catalog' } : next
     }
 
-    case 'DECREMENT_ITEM': {
+    case 'INCREMENT_LINE': {
       if (!EDITABLE.includes(state.screen)) return state
-      if (!state.items.some((i) => i.dishId === action.dishId)) return state
+      const line = state.items.find((i) => i.lineId === action.lineId)
+      if (!line || addBlockReason(state.items, state.stock, line.dishId)) return state
+      return withItems(
+        state,
+        state.items.map((i) => (i.lineId === line.lineId ? { ...i, quantity: i.quantity + 1 } : i)),
+      )
+    }
+
+    case 'DECREMENT_LINE': {
+      if (!EDITABLE.includes(state.screen)) return state
+      if (!state.items.some((i) => i.lineId === action.lineId)) return state
       const items = state.items
-        .map((i) => (i.dishId === action.dishId ? { ...i, quantity: i.quantity - 1 } : i))
+        .map((i) => (i.lineId === action.lineId ? { ...i, quantity: i.quantity - 1 } : i))
         .filter((i) => i.quantity > 0)
       return withItems(state, items)
     }
 
-    case 'REMOVE_ITEM':
+    case 'DECREMENT_DISH': {
       if (!EDITABLE.includes(state.screen)) return state
-      if (!state.items.some((i) => i.dishId === action.dishId)) return state
+      const last = [...state.items].reverse().find((i) => i.dishId === action.dishId)
+      if (!last) return state
+      return orderReducer(state, { type: 'DECREMENT_LINE', lineId: last.lineId })
+    }
+
+    case 'REMOVE_LINE':
+      if (!EDITABLE.includes(state.screen)) return state
+      if (!state.items.some((i) => i.lineId === action.lineId)) return state
       return withItems(
         state,
-        state.items.filter((i) => i.dishId !== action.dishId),
+        state.items.filter((i) => i.lineId !== action.lineId),
       )
 
     case 'GO_TO_SUMMARY':
@@ -136,9 +170,13 @@ export function orderReducer(state: OrderState, action: OrderAction): OrderState
       if (state.screen !== 'payment' || state.paymentStatus !== 'processing') return state
       return { ...state, paymentStatus: 'approved' }
 
-    case 'PAYMENT_DONE':
+    case 'PAYMENT_DONE': {
       if (state.screen !== 'payment' || state.paymentStatus !== 'approved') return state
-      return { ...state, screen: 'delivery', orderCode: action.orderCode, deliveryReady: false }
+      // La compra simulada descuenta el stock de la sesión
+      const stock = { ...state.stock }
+      for (const item of state.items) stock[item.dishId] = Math.max(0, (stock[item.dishId] ?? 0) - item.quantity)
+      return { ...state, screen: 'delivery', orderCode: action.orderCode, deliveryReady: false, stock }
+    }
 
     case 'DELIVERY_READY':
       if (state.screen !== 'delivery') return state
@@ -149,6 +187,6 @@ export function orderReducer(state: OrderState, action: OrderAction): OrderState
       return { ...state, screen: 'feedback' }
 
     case 'RESET':
-      return initialState
+      return { ...initialState, stock: state.stock }
   }
 }
